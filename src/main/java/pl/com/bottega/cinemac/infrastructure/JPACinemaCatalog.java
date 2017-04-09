@@ -31,8 +31,11 @@ public class JPACinemaCatalog implements CinemaCatalog{
         return cinemaDtos;
     }
 
-
     private CinemaDto createDto(Cinema cinema) {
-        return new CinemaDto();
+        CinemaDto cinemaDto = new CinemaDto();
+        cinemaDto.setId(cinema.getId());
+        cinemaDto.setCity(cinema.getCity());
+        cinemaDto.setName(cinema.getName());
+        return cinemaDto;
     }
 }
