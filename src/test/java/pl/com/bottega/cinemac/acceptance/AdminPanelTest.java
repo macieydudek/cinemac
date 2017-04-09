@@ -57,12 +57,9 @@ public class AdminPanelTest {
         CreateCinemaCommand cmd1 = new CreateCinemaCommand();
         cmd1.setName("Kosmos");
         cmd1.setCity("Lublin");
-        CreateCinemaCommand cmd2 = new CreateCinemaCommand();
-        cmd2.setName("Kosmos");
-        cmd2.setCity("Lublin");
         //when
         adminPanel.createCinema(cmd1);
-        adminPanel.createCinema(cmd2);
+        adminPanel.createCinema(cmd1);
     }
 }
 

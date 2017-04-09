@@ -18,13 +18,11 @@ public class JPACinemaRepository implements CinemaRepository{
     @Override
     @Transactional
     public void put(Cinema cinema) {
-        if (isAlreadyAdded(cinema)) {
-           throw new InvalidUserActionException(String.format("Cinema %s in %s is already added", cinema.getName(), cinema.getCity()));
-        }
         entityManager.persist(cinema);
     }
 
-    private boolean isAlreadyAdded(Cinema cinema) {
+    @Override
+    public boolean isAlreadyAdded(Cinema cinema) {
         Query query = entityManager.createQuery("SELECT c FROM Cinema c WHERE c.city = :city AND c.name = :name");
         query.setParameter("city", cinema.getCity());
         query.setParameter("name", cinema.getName());

@@ -5,4 +5,6 @@ public interface CinemaRepository {
     void put(Cinema cinema);
 
     Cinema get(Long id);
+
+    boolean isAlreadyAdded(Cinema cinema);
 }
