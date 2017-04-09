@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import pl.com.bottega.application.AdminPanel;
-import pl.com.bottega.application.CinemaCatalog;
-import pl.com.bottega.application.CinemaDto;
-import pl.com.bottega.model.commands.CreateCinemaCommand;
-import pl.com.bottega.model.commands.InvalidCommandException;
+import pl.com.bottega.cinemac.application.AdminPanel;
+import pl.com.bottega.cinemac.application.CinemaCatalog;
+import pl.com.bottega.cinemac.application.CinemaDto;
+import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
+import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
