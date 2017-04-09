@@ -1,4 +1,13 @@
 package pl.com.bottega.infrastructure;
 
-public class JPACinemaCatalog {
+import pl.com.bottega.application.CinemaCatalog;
+import pl.com.bottega.application.CinemaDto;
+
+import java.util.List;
+
+public class JPACinemaCatalog implements CinemaCatalog{
+    @Override
+    public List<CinemaDto> getCinemas() {
+        return null;
+    }
 }
