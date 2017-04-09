@@ -1,4 +1,4 @@
-package pl.com.bottega.acceptance;
+package pl.com.bottega.cinemac.acceptance;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.application.AdminPanel;
 import pl.com.bottega.cinemac.application.CinemaCatalog;
 import pl.com.bottega.cinemac.application.CinemaDto;
+import pl.com.bottega.cinemac.model.InvalidUserActionException;
 import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
-import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -51,7 +51,7 @@ public class AdminPanelTest {
         assertThat(cinemas.size()).isEqualTo(3);
     }
 
-    @Test(expected = InvalidCommandException.class)
+    @Test(expected = InvalidUserActionException.class)
     public void shouldNotAllowToAddSameCinemaTwice() {
         //given
         CreateCinemaCommand cmd1 = new CreateCinemaCommand();

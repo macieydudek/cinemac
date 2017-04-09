@@ -10,7 +10,7 @@ public interface Validatable {
     void validate(ValidationErrors errors);
 
     default boolean isEmpty(String s) {
-        return s.isEmpty() || s == null;
+        return s == null || s.isEmpty();
     }
 
     class ValidationErrors {

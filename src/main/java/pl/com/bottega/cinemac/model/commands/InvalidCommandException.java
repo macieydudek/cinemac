@@ -2,7 +2,13 @@ package pl.com.bottega.cinemac.model.commands;
 
 public class InvalidCommandException extends RuntimeException {
 
-    public InvalidCommandException(String msg) {
-        super(msg);
+    private Validatable.ValidationErrors errors;
+
+    public InvalidCommandException(Validatable.ValidationErrors errors) {
+        this.errors = errors;
+    }
+
+    public Validatable.ValidationErrors getErrors() {
+        return errors;
     }
 }

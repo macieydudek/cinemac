@@ -3,6 +3,7 @@ package pl.com.bottega.cinemac.infrastructure;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.model.Cinema;
 import pl.com.bottega.cinemac.model.CinemaRepository;
+import pl.com.bottega.cinemac.model.InvalidUserActionException;
 import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
 
 import javax.persistence.EntityManager;
@@ -18,7 +19,7 @@ public class JPACinemaRepository implements CinemaRepository{
     @Transactional
     public void put(Cinema cinema) {
         if (isAlreadyAdded(cinema)) {
-           throw new InvalidCommandException(String.format("Cinema %s in %s is already added", cinema.getName(), cinema.getCity()));
+           throw new InvalidUserActionException(String.format("Cinema %s in %s is already added", cinema.getName(), cinema.getCity()));
         }
         entityManager.persist(cinema);
     }
