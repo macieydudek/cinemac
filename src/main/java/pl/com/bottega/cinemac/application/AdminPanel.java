@@ -2,7 +2,7 @@ package pl.com.bottega.cinemac.application;
 
 import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
-import pl.com.bottega.cinemac.model.commands.CreateShowingCommand;
+import pl.com.bottega.cinemac.model.commands.CreateShowingsCommand;
 
 public interface AdminPanel {
 
@@ -10,5 +10,5 @@ public interface AdminPanel {
 
     void createMovie(CreateMovieCommand cmd);
 
-    void createShowings(CreateShowingCommand cmd);
+    void createShowings(CreateShowingsCommand cmd);
 }

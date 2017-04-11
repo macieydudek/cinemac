@@ -5,7 +5,7 @@ import pl.com.bottega.cinemac.application.AdminPanel;
 import pl.com.bottega.cinemac.application.CinemaCatalog;
 import pl.com.bottega.cinemac.application.CinemaDto;
 import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
-import pl.com.bottega.cinemac.model.commands.CreateShowingCommand;
+import pl.com.bottega.cinemac.model.commands.CreateShowingsCommand;
 
 import java.util.List;
 
@@ -32,6 +32,10 @@ public class CinemaController {
     }
 
 
-    public void createShowings(CreateShowingCommand cmd){}
+    @PutMapping("/cinemas/{cinemaId}/shows")
+    public void createShowings(@RequestBody CreateShowingsCommand cmd, @PathVariable Long cinemaId) {
+        cmd.setCinemaId(cinemaId);
+        adminPanel.createShowings(cmd);
+    }
 
 }

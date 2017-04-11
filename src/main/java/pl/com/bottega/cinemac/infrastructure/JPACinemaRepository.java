@@ -31,6 +31,6 @@ public class JPACinemaRepository implements CinemaRepository{
 
     @Override
     public Cinema get(Long id) {
-        return null;
+        return entityManager.find(Cinema.class, id);
     }
 }
