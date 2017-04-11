@@ -17,10 +17,8 @@ public class ShowingsFactory {
         List<Showing> showings = new LinkedList<>();
         if (cmd.getDates() != null)
             addShowingsOfDates(cinema, movie, cmd, showings);
-        else if (cmd.getCalendar() != null) {
+        if (cmd.getCalendar() != null)
             addShowingsOfCalendar(cinema, movie, cmd, showings);
-        } else
-            throw new IncompleteDataException("Please specify dates of your shows");
         return showings;
     }
 
