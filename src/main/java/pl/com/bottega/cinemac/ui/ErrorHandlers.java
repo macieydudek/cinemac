@@ -9,11 +9,13 @@ import pl.com.bottega.cinemac.model.InvalidUserActionException;
 import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
 import pl.com.bottega.cinemac.model.commands.Validatable;
 
+
 @ControllerAdvice
 public class ErrorHandlers {
 
 
     @ExceptionHandler(InvalidUserActionException.class)
+
     public ResponseEntity<String> handleInvalidUserActionException(InvalidUserActionException ex) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
@@ -32,6 +34,5 @@ public class ErrorHandlers {
                 headers,
                 HttpStatus.UNPROCESSABLE_ENTITY);
     }
-
 
 }

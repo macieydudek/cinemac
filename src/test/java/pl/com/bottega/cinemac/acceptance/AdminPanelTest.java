@@ -12,6 +12,7 @@ import pl.com.bottega.cinemac.application.CinemaDto;
 import pl.com.bottega.cinemac.model.InvalidUserActionException;
 import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
 
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;

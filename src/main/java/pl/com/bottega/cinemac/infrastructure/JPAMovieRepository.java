@@ -9,11 +9,11 @@ import javax.persistence.PersistenceContext;
 public class JPAMovieRepository implements MovieRepository{
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public void put(Movie movie) {
-
+        entityManager.persist(movie);
     }
 
     @Override
