@@ -41,9 +41,16 @@ public class StandardAdminPanel implements AdminPanel {
     @Override
     public void createShowings(CreateShowingsCommand cmd) {
         Cinema cinema = cinemaRepository.get(cmd.getCinemaId());
+        if(cinema == null)
+            throw new IllegalArgumentException("Cinema does not exist");
+
         Movie movie = movieRepository.get(cmd.getMovieId());
+        if(movie == null)
+            throw new IllegalArgumentException("Movie does not exist");
+
         List<Showing> showings = showingsFactory.createShowings(cinema, movie, cmd);
         for (Showing showing : showings)
+            if(!showingRepository.isAlreadyAdded(showing))
             showingRepository.put(showing);
     }
 }

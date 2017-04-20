@@ -9,6 +9,5 @@ public class CinemaCApp {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(CinemaCApp.class, args);
-        System.out.println("Witaj świat!");
     }
 }

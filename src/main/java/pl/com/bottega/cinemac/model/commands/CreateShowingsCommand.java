@@ -10,7 +10,7 @@ public class CreateShowingsCommand implements Validatable{
     private Long movieId;
     private List<String> dates;
     private Long cinemaId;
-    private CustomCalendar calendar;
+    private ShowingCalendar calendar;
 
     public Long getMovieId() {
         return movieId;
@@ -36,11 +36,11 @@ public class CreateShowingsCommand implements Validatable{
         return cinemaId;
     }
 
-    public CustomCalendar getCalendar() {
+    public ShowingCalendar getCalendar() {
         return calendar;
     }
 
-    public void setCalendar(CustomCalendar calendar) {
+    public void setCalendar(ShowingCalendar calendar) {
         this.calendar = calendar;
     }
 

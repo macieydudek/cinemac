@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CustomCalendar {
+public class ShowingCalendar {
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonProperty(required = true)

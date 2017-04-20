@@ -2,9 +2,11 @@ package pl.com.bottega.cinemac.model;
 
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Set;
 
 @Entity
 public class Movie {
@@ -17,19 +19,17 @@ public class Movie {
 
     String description;
 
-    /*
-    Wykomentowałem, żeby się nie wtrącać w nieswoje kejsy,
-    a musiałem z tego zrobić encję - Kuba
+    @ElementCollection
     Set<String> actors;
 
-    Set<String> genres;*/
+    @ElementCollection
+    Set<String> genres;
 
     Integer minAge;
 
     Integer length;
 
-    Movie() {
-    }
+    Movie() {}
 
     public Movie(CreateMovieCommand cmd) {
 

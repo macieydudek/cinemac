@@ -1,7 +1,7 @@
 package pl.com.bottega.cinemac.model;
 
 import pl.com.bottega.cinemac.model.commands.CreateShowingsCommand;
-import pl.com.bottega.cinemac.model.commands.CustomCalendar;
+import pl.com.bottega.cinemac.model.commands.ShowingCalendar;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -23,32 +23,28 @@ public class ShowingsFactory {
     }
 
     private void addShowingsOfCalendar(Cinema cinema, Movie movie, CreateShowingsCommand cmd, List<Showing> showings) {
-        CustomCalendar calendar = cmd.getCalendar();
+        ShowingCalendar calendar = cmd.getCalendar();
         List<String> weekDays = calendar.getWeekDays();
         for (String day : weekDays) {
             LocalDateTime showingDate = getFirstWeekDayOfPeriod(calendar, day);
-            while (showingIsBeforeUntilDate(calendar, showingDate)) {
                 for (String hour : calendar.getHours()) {
-                    setAndAddShowing(cinema, movie, showings, showingDate, hour);
-                }
-                showingDate = showingDate.plusWeeks(1L);
+                    LocalTime showTime = LocalTime.parse(hour, DateTimeFormatter.ofPattern("kk:mm"));
+                    LocalDateTime showingDateAndTime = showingDate
+                            .withHour(showTime.getHour())
+                            .withMinute(showTime.getMinute());
+                    while (showingIsBeforeUntilDate(calendar, showingDateAndTime)) {
+                        showings.add(new Showing(showingDateAndTime, cinema, movie));
+                        showingDateAndTime = showingDateAndTime.plusWeeks(1L);
+                    }
             }
         }
     }
 
-    private void setAndAddShowing(Cinema cinema, Movie movie, List<Showing> showings, LocalDateTime showingDate, String hour) {
-        LocalTime showTime = LocalTime.parse(hour, DateTimeFormatter.ofPattern("kk:mm"));
-        LocalDateTime showing = showingDate
-                .withHour(showTime.getHour())
-                .withMinute(showTime.getMinute());
-        showings.add(new Showing(showing, cinema, movie));
-    }
-
-    private boolean showingIsBeforeUntilDate(CustomCalendar calendar, LocalDateTime showingDate) {
+    private boolean showingIsBeforeUntilDate(ShowingCalendar calendar, LocalDateTime showingDate) {
         return (showingDate != null) && showingDate.isBefore(calendar.getUntilDate());
     }
 
-    private LocalDateTime getFirstWeekDayOfPeriod(CustomCalendar calendar, String day) {
+    private LocalDateTime getFirstWeekDayOfPeriod(ShowingCalendar calendar, String day) {
         return calendar.getFromDate()
                 .with(TemporalAdjusters.nextOrSame(DayOfWeek.valueOf(day.toUpperCase())));
     }

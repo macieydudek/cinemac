@@ -34,8 +34,8 @@ public class CinemaController {
 
     @PutMapping("/cinemas/{cinemaId}/shows")
     public void createShowings(@RequestBody CreateShowingsCommand cmd, @PathVariable Long cinemaId) {
-        cmd.setCinemaId(cinemaId);
-        adminPanel.createShowings(cmd);
+            cmd.setCinemaId(cinemaId);
+            adminPanel.createShowings(cmd);
     }
 
 }
