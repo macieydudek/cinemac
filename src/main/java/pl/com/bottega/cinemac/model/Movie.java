@@ -13,25 +13,54 @@ public class Movie {
 
     @Id
     @GeneratedValue
-    Long id;
-
-    String title;
-
-    String description;
-
+    private Long id;
+    private String title;
+    private String description;
+    private Integer minAge;
+    private Integer length;
     @ElementCollection
-    Set<String> actors;
-
+    private Set<String> actors;
     @ElementCollection
-    Set<String> genres;
+    private Set<String> genres;
 
-    Integer minAge;
 
-    Integer length;
-
-    Movie() {}
+    Movie() {
+    }
 
     public Movie(CreateMovieCommand cmd) {
+        this.title = cmd.getTitle();
+        this.description = cmd.getDescription();
+        this.minAge = cmd.getMinAge();
+        this.length = cmd.getLength();
+        this.actors = cmd.getActors();
+        this.genres = cmd.getGenres();
+    }
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public Set<String> getActors() {
+        return this.actors;
+    }
+
+    public Set<String> getGenres() {
+        return this.genres;
+    }
+
+    public Integer getMinAge() {
+        return this.minAge;
+    }
+
+    public Integer getLength() {
+        return this.length;
     }
 }

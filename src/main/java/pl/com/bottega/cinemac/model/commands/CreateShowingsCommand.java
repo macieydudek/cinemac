@@ -1,6 +1,6 @@
 package pl.com.bottega.cinemac.model.commands;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation .JsonProperty;
 
 import java.util.List;
 

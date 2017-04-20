@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
 import pl.com.bottega.cinemac.model.commands.Validatable;
 
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
+
 @Component
 @Aspect
 public class ValidationAspect {
