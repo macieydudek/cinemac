@@ -104,7 +104,7 @@ public class CreateShowingsCommand implements Validatable {
                 errors.add("weekDays", "Can't be blank");
 
             for (String weekDay : weekDays)
-                DayOfWeek.valueOf(weekDay);
+                DayOfWeek.valueOf(weekDay.toUpperCase());
 
         } catch (IllegalArgumentException e) {
             errors.add("weekDays", "Incorrect weekDay name");
