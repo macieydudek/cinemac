@@ -1,12 +1,17 @@
 package pl.com.bottega.cinemac.model.commands;
 
-import com.fasterxml.jackson.annotation .JsonProperty;
-
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
-public class CreateShowingsCommand implements Validatable{
+public class CreateShowingsCommand implements Validatable {
 
-    @JsonProperty(required = true)
+    private static final DateTimeFormatter CORRECT_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy/MM/dd kk:mm");
+    private static final DateTimeFormatter CORRECT_TIME_FORMAT = DateTimeFormatter.ofPattern("kk:mm");
+
     private Long movieId;
     private List<String> dates;
     private Long cinemaId;
@@ -46,11 +51,81 @@ public class CreateShowingsCommand implements Validatable{
 
     @Override
     public void validate(ValidationErrors errors) {
-        if(movieId == null)
-            errors.add("movieId", "Can't be blank");
-        if((dates == null || dates.isEmpty()) && calendar == null)
+        validateMovieIdIsNotNull(errors);
+        validateDatesOrCalendarAreFilled(errors);
+        if (dates != null)
+            validateDatesFormat(errors);
+        if (calendar != null) {
+            validateWeekDaysFormat(errors);
+            validateHoursFormat(errors);
+            validateFromDateFormat(errors);
+            validateUntilDateFormat(errors);
+        }
+    }
+
+    private void validateDatesOrCalendarAreFilled(ValidationErrors errors) {
+        if ((dates == null || dates.isEmpty()) && calendar == null)
             errors.add("dates or calendar", "Fill dates or calendar, they can't be both blank");
     }
+
+    private void validateMovieIdIsNotNull(ValidationErrors errors) {
+        if (movieId == null)
+            errors.add("movieId", "Can't be blank");
+    }
+
+    private void validateFromDateFormat(ValidationErrors errors) {
+        validateSingleDateTimeFormat("fromDate", errors, calendar.getFromDate());
+    }
+
+    private void validateUntilDateFormat(ValidationErrors errors) {
+        validateSingleDateTimeFormat("untilDate", errors, calendar.getUntilDate());
+    }
+
+    private void validateHoursFormat(ValidationErrors errors) {
+        List<String> hours = calendar.getHours();
+
+        if (hours == null || hours.isEmpty())
+            errors.add("hours", "Can't be blank");
+
+        for (String hour : hours) {
+            try {
+                LocalTime.parse(hour, CORRECT_TIME_FORMAT);
+            } catch (DateTimeParseException e) {
+                errors.add("hours", "Incorrect hour format, correct format is HH:mm");
+            }
+        }
+    }
+
+    private void validateWeekDaysFormat(ValidationErrors errors) {
+        try {
+            List<String> weekDays = calendar.getWeekDays();
+
+            if (weekDays == null || weekDays.isEmpty())
+                errors.add("weekDays", "Can't be blank");
+
+            for (String weekDay : weekDays)
+                DayOfWeek.valueOf(weekDay);
+
+        } catch (IllegalArgumentException e) {
+            errors.add("weekDays", "Incorrect weekDay name");
+    }
+
+}
+
+    private void validateDatesFormat(ValidationErrors errors) {
+        for (String date : dates) {
+            validateSingleDateTimeFormat("dates", errors, date);
+        }
+    }
+
+    private void validateSingleDateTimeFormat(String fieldName, ValidationErrors errors, String date) {
+        try {
+            LocalDateTime.parse(date, CORRECT_DATE_TIME_FORMAT);
+        } catch (DateTimeParseException e) {
+            errors.add(fieldName, "Incorrect date format, correct format is yyyy/MM/dd HH:mm");
+        }
+    }
+
 
 }
 

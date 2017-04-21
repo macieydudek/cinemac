@@ -6,6 +6,7 @@ import pl.com.bottega.cinemac.model.*;
 import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
 import pl.com.bottega.cinemac.model.commands.CreateShowingsCommand;
+import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
 
 import java.util.List;
 
@@ -44,11 +45,11 @@ public class StandardAdminPanel implements AdminPanel {
     public void createShowings(CreateShowingsCommand cmd) {
         Cinema cinema = cinemaRepository.get(cmd.getCinemaId());
         if(cinema == null)
-            throw new IllegalArgumentException("Cinema does not exist");
+            throw new InvalidCommandException("cinemaId", "Cinema does not exist");
 
         Movie movie = movieRepository.get(cmd.getMovieId());
         if(movie == null)
-            throw new IllegalArgumentException("Movie does not exist");
+            throw new InvalidCommandException("movieId", "Movie does not exist");
 
         List<Showing> showings = showingsFactory.createShowings(cinema, movie, cmd);
         for (Showing showing : showings)

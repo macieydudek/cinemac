@@ -27,26 +27,31 @@ public class ShowingsFactory {
         List<String> weekDays = calendar.getWeekDays();
         for (String day : weekDays) {
             LocalDateTime showingDate = getFirstWeekDayOfPeriod(calendar, day);
-                for (String hour : calendar.getHours()) {
-                    LocalTime showTime = LocalTime.parse(hour, DateTimeFormatter.ofPattern("kk:mm"));
-                    LocalDateTime showingDateAndTime = showingDate
-                            .withHour(showTime.getHour())
-                            .withMinute(showTime.getMinute());
-                    while (showingIsBeforeUntilDate(calendar, showingDateAndTime)) {
-                        showings.add(new Showing(showingDateAndTime, cinema, movie));
-                        showingDateAndTime = showingDateAndTime.plusWeeks(1L);
-                    }
+            for (String hour : calendar.getHours()) {
+                LocalTime showTime = LocalTime.parse(hour, DateTimeFormatter.ofPattern("kk:mm"));
+                setAndAddShowings(cinema, movie, showings, calendar, showingDate, showTime);
             }
         }
     }
 
+    private void setAndAddShowings(Cinema cinema, Movie movie, List<Showing> showings, ShowingCalendar calendar, LocalDateTime showingDate, LocalTime showTime) {
+        LocalDateTime showingDateAndTime = showingDate
+                .withHour(showTime.getHour())
+                .withMinute(showTime.getMinute());
+        while (showingIsBeforeUntilDate(calendar, showingDateAndTime)) {
+            showings.add(new Showing(showingDateAndTime, cinema, movie));
+            showingDateAndTime = showingDateAndTime.plusWeeks(1L);
+        }
+    }
+
     private boolean showingIsBeforeUntilDate(ShowingCalendar calendar, LocalDateTime showingDate) {
-        return (showingDate != null) && showingDate.isBefore(calendar.getUntilDate());
+        LocalDateTime untilDate = LocalDateTime.parse(calendar.getUntilDate(), DateTimeFormatter.ofPattern("yyyy/MM/dd kk:mm"));
+        return (showingDate != null) && showingDate.isBefore(untilDate);
     }
 
     private LocalDateTime getFirstWeekDayOfPeriod(ShowingCalendar calendar, String day) {
-        return calendar.getFromDate()
-                .with(TemporalAdjusters.nextOrSame(DayOfWeek.valueOf(day.toUpperCase())));
+        LocalDateTime fromDate = LocalDateTime.parse(calendar.getFromDate(), DateTimeFormatter.ofPattern("yyyy/MM/dd kk:mm"));
+        return fromDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.valueOf(day.toUpperCase())));
     }
 
     private void addShowingsOfDates(Cinema cinema, Movie movie, CreateShowingsCommand cmd, List<Showing> showings) {

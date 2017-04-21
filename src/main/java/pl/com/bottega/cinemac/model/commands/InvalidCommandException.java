@@ -8,6 +8,11 @@ public class InvalidCommandException extends RuntimeException {
         this.errors = errors;
     }
 
+    public InvalidCommandException(String fieldName, String error) {
+        errors = new Validatable.ValidationErrors();
+        errors.add(fieldName, error);
+    }
+
     public Validatable.ValidationErrors getErrors() {
         return errors;
     }

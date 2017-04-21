@@ -1,38 +1,28 @@
 package pl.com.bottega.cinemac.model.commands;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ShowingCalendar {
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonProperty(required = true)
-    private LocalDateTime fromDate;
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonProperty(required = true)
-    private LocalDateTime untilDate;
+    private String fromDate;
+    private String untilDate;
 
-    @JsonProperty(required = true)
     private List<String> weekDays;
-    @JsonProperty(required = true)
     private List<String> hours;
 
-    public LocalDateTime getFromDate() {
+    public String getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(LocalDateTime fromDate) {
+    public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
 
-    public LocalDateTime getUntilDate() {
+    public String getUntilDate() {
         return untilDate;
     }
 
-    public void setUntilDate(LocalDateTime untilDate) {
+    public void setUntilDate(String untilDate) {
         this.untilDate = untilDate;
     }
 
@@ -51,4 +41,5 @@ public class ShowingCalendar {
     public void setHours(List<String> hours) {
         this.hours = hours;
     }
+
 }
