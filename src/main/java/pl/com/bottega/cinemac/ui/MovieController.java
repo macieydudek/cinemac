@@ -1,11 +1,9 @@
 package pl.com.bottega.cinemac.ui;
 
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.com.bottega.cinemac.application.AdminPanel;
 
+import pl.com.bottega.cinemac.application.PricesDto;
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
 
 @RestController
@@ -24,5 +22,9 @@ public class MovieController {
         adminPanel.createMovie(cmd);
     }
 
-    
+    @RequestMapping("/{movieId}/prices")
+    @PutMapping
+    public void defineMoviePricing(@PathVariable Long movieId, @RequestBody PricesDto pricesDto) {
+        adminPanel.defineMoviePrices(movieId, pricesDto);
+    }
 }

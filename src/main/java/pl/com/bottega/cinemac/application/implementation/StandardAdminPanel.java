@@ -2,6 +2,7 @@ package pl.com.bottega.cinemac.application.implementation;
 
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.application.AdminPanel;
+import pl.com.bottega.cinemac.application.PricesDto;
 import pl.com.bottega.cinemac.model.*;
 import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
@@ -55,5 +56,10 @@ public class StandardAdminPanel implements AdminPanel {
         for (Showing showing : showings)
             if(!showingRepository.isAlreadyAdded(showing))
             showingRepository.put(showing);
+    }
+
+    @Override
+    public void defineMoviePrices(Long movieId, PricesDto pricesDto) {
+
     }
 }
