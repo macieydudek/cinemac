@@ -1,11 +1,11 @@
 package pl.com.bottega.cinemac.model;
 
+import pl.com.bottega.cinemac.application.PricesDto;
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -23,6 +23,7 @@ public class Movie {
     @ElementCollection
     private Set<String> genres;
 
+    //private Pricing pricing;
 
     Movie() {
     }
@@ -63,4 +64,8 @@ public class Movie {
     public Integer getLength() {
         return this.length;
     }
+
+//    public void updatePricing(Map<String, BigDecimal> pricing) {
+//        this.pricing = new Pricing(pricing);
+//    }
 }

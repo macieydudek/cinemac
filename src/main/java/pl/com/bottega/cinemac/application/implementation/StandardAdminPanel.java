@@ -60,6 +60,19 @@ public class StandardAdminPanel implements AdminPanel {
 
     @Override
     public void defineMoviePrices(Long movieId, PricesDto pricesDto) {
+        validatePricesDto(pricesDto);
+        Movie movie = movieRepository.get(movieId);
+        if(movie == null)
+            throw new InvalidCommandException("movieId", "Movie does not exist");
+       // movie.updatePricing(pricesDto.getPriceMap());
+    }
 
+    private void validatePricesDto(PricesDto pricesDto) {
+        if (!pricesDto.getPriceMap().containsKey("regular")) {
+            throw new InvalidCommandException("pricing", "Price for >>regular<< ticket has to be defined");
+        }
+        if (!pricesDto.getPriceMap().containsKey("student")) {
+            throw new InvalidCommandException("pricing", "Price for >>regular<< ticket has to be defined");
+        }
     }
 }
