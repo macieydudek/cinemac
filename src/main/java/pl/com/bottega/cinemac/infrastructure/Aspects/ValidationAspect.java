@@ -22,5 +22,4 @@ public class ValidationAspect {
             throw new InvalidCommandException(errors);
         }
     }
-
 }

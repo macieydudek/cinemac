@@ -60,6 +60,7 @@ public class CreateMovieCommand implements Validatable {
     }
 
 
+
     @Override
     public void validate(ValidationErrors errors) {
         if (isEmpty(title)) {
@@ -68,18 +69,46 @@ public class CreateMovieCommand implements Validatable {
         if (isEmpty(description)) {
             errors.add("description", "can't be blank");
         }
-        if (isEmpty(minAge.toString())) {
-            errors.add("minmum Age", "can't be blank");
-        }
-        if (isEmpty(length.toString())) {
-            errors.add("length", "can't be blank");
-        }
-        if (actors.isEmpty()) {
+        validateMinAge(errors);
+        validateLength(errors);
+        validateActors(errors);
+        validateGenres(errors);
+    }
+    private void validateGenres(ValidationErrors errors) {
+        if(genres == null || genres.isEmpty()){
             errors.add("actors", "can't be blank");
+            return;
         }
-        if (genres.isEmpty()) {
-            errors.add("genres", "can't be blank");
+        for (String  actor : genres){
+            if(isEmpty(actor))
+                errors.add("genres","can't be blank");
         }
+    }
+    private void validateActors(ValidationErrors errors) {
+        if(actors == null || actors.isEmpty()){
+            errors.add("actors", "can't be blank");
+            return;
+        }
+        for (String  actor : actors){
+            if(isEmpty(actor))
+                errors.add("actors","can't be blank");
+        }
+    }
+    private void validateLength(ValidationErrors errors) {
+        if(length == null){
+            errors.add("lengt","has to be define");
+            return;
+        }
+        if(length <= 0)
+            errors.add("lengt","invalid value");
+    }
+    private void validateMinAge(ValidationErrors errors) {
+        if(minAge == null){
+            errors.add("minAge","has to be define");
+            return;
+        }
+        if(minAge <= 0)
+            errors.add("minAge","invalid value");
     }
 
 }

@@ -23,7 +23,7 @@ public class Movie {
     @ElementCollection
     private Set<String> genres;
 
-    //private Pricing pricing;
+   // private Pricing pricing;
 
     Movie() {
     }
@@ -65,7 +65,7 @@ public class Movie {
         return this.length;
     }
 
-//    public void updatePricing(Map<String, BigDecimal> pricing) {
+public void updatePricing(Map<String, BigDecimal> pricing) {
 //        this.pricing = new Pricing(pricing);
-//    }
+    }
 }
