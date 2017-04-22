@@ -15,7 +15,6 @@ public class ErrorHandlers {
 
 
     @ExceptionHandler(InvalidUserActionException.class)
-
     public ResponseEntity<String> handleInvalidUserActionException(InvalidUserActionException ex) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
