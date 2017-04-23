@@ -76,7 +76,7 @@ public class AdminPanelTest {
         adminPanel.createCinema(cmd2);
         adminPanel.createCinema(cmd3);
         //then
-        List<CinemaDto> cinemas = cinemaCatalog.getCinemas();
+            List<CinemaDto> cinemas = cinemaCatalog.getCinemas();
         assertThat(cinemas.size()).isEqualTo(3);
     }
 
