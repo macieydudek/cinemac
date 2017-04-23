@@ -1,23 +1,27 @@
 package pl.com.bottega.cinemac.model;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Pricing {
+@Entity
+class Pricing {
 
+    @Id
+    @GeneratedValue
+    Long id;
 
-//    Map<String, BigDecimal> pricing;
-//
-//    Pricing(Map<String, BigDecimal> pricing) {
-//        this.pricing = new HashMap<String, BigDecimal>();
-//        this.pricing.putAll(pricing);
-//    }
+    @ElementCollection
+    private Map<String, BigDecimal> pricing;
 
     Pricing() {
-
+        this.pricing = new HashMap();
     }
+
+    void update(Map<String, BigDecimal> pricing) {
+        this.pricing.putAll(pricing);
+    }
+
 }

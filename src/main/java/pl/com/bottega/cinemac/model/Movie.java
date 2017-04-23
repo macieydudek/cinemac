@@ -1,6 +1,5 @@
 package pl.com.bottega.cinemac.model;
 
-import pl.com.bottega.cinemac.application.PricesDto;
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
 
 import javax.persistence.*;
@@ -23,7 +22,8 @@ public class Movie {
     @ElementCollection
     private Set<String> genres;
 
-   // private Pricing pricing;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Pricing pricing;
 
     Movie() {
     }
@@ -66,6 +66,9 @@ public class Movie {
     }
 
 public void updatePricing(Map<String, BigDecimal> pricing) {
-//        this.pricing = new Pricing(pricing);
+    if (this.pricing == null) {
+        this.pricing = new Pricing();
+    }
+        this.pricing.update(pricing);
     }
 }

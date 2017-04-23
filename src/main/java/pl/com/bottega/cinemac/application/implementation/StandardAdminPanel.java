@@ -1,15 +1,14 @@
 package pl.com.bottega.cinemac.application.implementation;
 
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.application.AdminPanel;
-import pl.com.bottega.cinemac.application.PricesDto;
 import pl.com.bottega.cinemac.model.*;
-import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
-import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
-import pl.com.bottega.cinemac.model.commands.CreateShowingsCommand;
-import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
+import pl.com.bottega.cinemac.model.commands.*;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 public class StandardAdminPanel implements AdminPanel {
@@ -59,20 +58,29 @@ public class StandardAdminPanel implements AdminPanel {
     }
 
     @Override
-    public void defineMoviePrices(Long movieId, PricesDto pricesDto) {
-        validatePricesDto(pricesDto);
-        Movie movie = movieRepository.get(movieId);
-        if(movie == null)
+    public void defineMoviePrices(DefineMoviePricingCommand cmd) {
+        Movie movie = movieRepository.get(cmd.getMovieId());
+        if(movie == null) {
             throw new InvalidCommandException("movieId", "Movie does not exist");
-       // movie.updatePricing(pricesDto.getPriceMap());
+        }
+        movie.updatePricing(cmd.getPrices());
     }
 
-    private void validatePricesDto(PricesDto pricesDto) {
-        if (!pricesDto.getPriceMap().containsKey("regular")) {
+    private void validatePrices(Map<String, BigDecimal> prices) {
+        if (!prices.containsKey("regular")) {
             throw new InvalidCommandException("pricing", "Price for >>regular<< ticket has to be defined");
         }
-        if (!pricesDto.getPriceMap().containsKey("student")) {
+        if (!prices.containsKey("student")) {
             throw new InvalidCommandException("pricing", "Price for >>regular<< ticket has to be defined");
+        }
+        for (String ticketType : prices.keySet()) {
+            try {
+                if (prices.get(ticketType).compareTo(BigDecimal.ZERO) == -1) {
+                    throw new InvalidCommandException("ticket price", "Cannot be negative");
+                }
+            } catch (HttpMessageNotReadableException ex) {
+                throw new InvalidCommandException("Ticket price", "invalid format");
+            }
         }
     }
 }
