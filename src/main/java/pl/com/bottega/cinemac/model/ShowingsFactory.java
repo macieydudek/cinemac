@@ -46,7 +46,7 @@ public class ShowingsFactory {
 
     private boolean showingIsBeforeUntilDate(ShowingCalendar calendar, LocalDateTime showingDate) {
         LocalDateTime untilDate = LocalDateTime.parse(calendar.getUntilDate(), DateTimeFormatter.ofPattern("yyyy/MM/dd kk:mm"));
-        return (showingDate != null) && showingDate.isBefore(untilDate);
+        return (showingDate != null) && showingDate.isBefore(untilDate) || showingDate.isEqual(untilDate);
     }
 
     private LocalDateTime getFirstWeekDayOfPeriod(ShowingCalendar calendar, String day) {

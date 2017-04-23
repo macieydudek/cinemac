@@ -2,10 +2,7 @@ package pl.com.bottega.cinemac.model;
 
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -22,6 +19,8 @@ public class Movie {
     private Set<String> actors;
     @ElementCollection
     private Set<String> genres;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    private Set<Showing> showings;
 
 
     Movie() {
@@ -62,5 +61,9 @@ public class Movie {
 
     public Integer getLength() {
         return this.length;
+    }
+
+    public Set<Showing> getShowings() {
+        return showings;
     }
 }

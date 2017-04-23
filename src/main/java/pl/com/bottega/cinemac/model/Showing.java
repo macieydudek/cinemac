@@ -15,7 +15,6 @@ public class Showing {
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
     @ManyToOne
-    @JoinColumn(name = "movie_id")
     private Movie movie;
 
     Showing(){}
