@@ -65,10 +65,10 @@ public class Movie {
         return this.length;
     }
 
-public void updatePricing(Map<String, BigDecimal> pricing) {
-    if (this.pricing == null) {
-        this.pricing = new Pricing();
-    }
+    public void updatePricing(Map<String, BigDecimal> pricing) {
+        if (this.pricing == null) {
+            this.pricing = new Pricing();
+        }
         this.pricing.update(pricing);
     }
 }

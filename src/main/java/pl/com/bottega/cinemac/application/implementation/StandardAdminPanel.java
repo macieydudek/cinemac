@@ -66,21 +66,4 @@ public class StandardAdminPanel implements AdminPanel {
         movie.updatePricing(cmd.getPrices());
     }
 
-    private void validatePrices(Map<String, BigDecimal> prices) {
-        if (!prices.containsKey("regular")) {
-            throw new InvalidCommandException("pricing", "Price for >>regular<< ticket has to be defined");
-        }
-        if (!prices.containsKey("student")) {
-            throw new InvalidCommandException("pricing", "Price for >>regular<< ticket has to be defined");
-        }
-        for (String ticketType : prices.keySet()) {
-            try {
-                if (prices.get(ticketType).compareTo(BigDecimal.ZERO) == -1) {
-                    throw new InvalidCommandException("ticket price", "Cannot be negative");
-                }
-            } catch (HttpMessageNotReadableException ex) {
-                throw new InvalidCommandException("Ticket price", "invalid format");
-            }
-        }
-    }
 }
