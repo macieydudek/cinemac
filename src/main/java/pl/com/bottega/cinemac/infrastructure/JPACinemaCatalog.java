@@ -1,9 +1,6 @@
 package pl.com.bottega.cinemac.infrastructure;
 
-import pl.com.bottega.cinemac.application.CinemaCatalog;
-import pl.com.bottega.cinemac.application.CinemaDto;
-import pl.com.bottega.cinemac.application.MovieShowingsDto;
-import pl.com.bottega.cinemac.application.Show;
+import pl.com.bottega.cinemac.application.*;
 import pl.com.bottega.cinemac.model.Cinema;
 import pl.com.bottega.cinemac.model.Movie;
 import pl.com.bottega.cinemac.model.Showing;
@@ -28,6 +25,19 @@ public class JPACinemaCatalog implements CinemaCatalog {
     }
 
     @Override
+    public List<MovieDto> getMovies() {
+        List<Movie> movies = entityManager.createQuery("SELECT m FROM Movie m").getResultList();
+        return createMovieDtos(movies);
+    }
+
+    private List<MovieDto> createMovieDtos(List<Movie> movies) {
+        List<MovieDto> dtos = new LinkedList<>();
+        for(Movie movie : movies)
+            dtos.add(createMovieDto(movie));
+        return dtos;
+    }
+
+    @Override
     public List<MovieShowingsDto> getShowings(Long cinemaId, LocalDate date) {
         List<MovieShowingsDto> dtos = new LinkedList<>();
         Query movieQuery = entityManager.createQuery("SELECT DISTINCT m FROM Movie m JOIN FETCH m.showings s WHERE s.cinema.id = :id AND s.beginsAt BETWEEN :startDate AND :endDate ORDER BY m.title ASC ");
@@ -42,15 +52,22 @@ public class JPACinemaCatalog implements CinemaCatalog {
     }
 
     private MovieShowingsDto createMovieShowingsDto(Movie movie) {
-        MovieShowingsDto dto = new MovieShowingsDto();
-        dto.setTitle(movie.getTitle());
-        dto.setDescription(movie.getDescription());
-        dto.setMinAge(movie.getMinAge());
-        dto.setLength(movie.getLength());
-        dto.setActors(movie.getActors());
-        dto.setGenres(movie.getGenres());
-        dto.setShows(createMovieShows(movie.getShowings()));
-        return dto;
+        MovieShowingsDto movieShowingsDto = new MovieShowingsDto();
+        movieShowingsDto.setShows(createMovieShows(movie.getShowings()));
+        movieShowingsDto.setMovie(createMovieDto(movie));
+        return movieShowingsDto;
+    }
+
+    private MovieDto createMovieDto(Movie movie) {
+        MovieDto movieDto = new MovieDto();
+        movieDto.setId(movie.getId());
+        movieDto.setTitle(movie.getTitle());
+        movieDto.setDescription(movie.getDescription());
+        movieDto.setMinAge(movie.getMinAge());
+        movieDto.setLength(movie.getLength());
+        movieDto.setActors(movie.getActors());
+        movieDto.setGenres(movie.getGenres());
+        return movieDto;
     }
 
     private List<Show> createMovieShows(Set<Showing> showings) {

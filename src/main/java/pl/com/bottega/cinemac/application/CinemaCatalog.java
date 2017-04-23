@@ -7,5 +7,7 @@ public interface CinemaCatalog {
 
     List<CinemaDto> getCinemas();
 
+    List<MovieDto> getMovies();
+
     List<MovieShowingsDto> getShowings(Long cinemaId, LocalDate date);
 }
