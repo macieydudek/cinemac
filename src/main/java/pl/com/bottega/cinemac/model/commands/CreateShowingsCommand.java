@@ -103,14 +103,17 @@ public class CreateShowingsCommand implements Validatable {
             if (weekDays == null || weekDays.isEmpty())
                 errors.add("weekDays", "Can't be blank");
 
-            for (String weekDay : weekDays)
-                DayOfWeek.valueOf(weekDay.toUpperCase());
+            for (String weekDay : weekDays) {
+                if (weekDay == null)
+                    errors.add("weekDays", "Can't be null");
+                else
+                    DayOfWeek.valueOf(weekDay.toUpperCase());
+            }
 
         } catch (IllegalArgumentException e) {
             errors.add("weekDays", "Incorrect weekDay name");
+        }
     }
-
-}
 
     private void validateDatesFormat(ValidationErrors errors) {
         for (String date : dates) {
@@ -120,7 +123,9 @@ public class CreateShowingsCommand implements Validatable {
 
     private void validateSingleDateTimeFormat(String fieldName, ValidationErrors errors, String date) {
         try {
-            LocalDateTime.parse(date, CORRECT_DATE_TIME_FORMAT);
+            LocalDateTime dateTime = LocalDateTime.parse(date, CORRECT_DATE_TIME_FORMAT);
+            if(dateTime.isBefore(LocalDateTime.now()))
+                errors.add(fieldName, "Can't be in the past");
         } catch (DateTimeParseException e) {
             errors.add(fieldName, "Incorrect date format, correct format is yyyy/MM/dd HH:mm");
         }
