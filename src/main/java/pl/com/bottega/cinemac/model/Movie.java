@@ -3,6 +3,9 @@ package pl.com.bottega.cinemac.model;
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Map;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -22,6 +25,8 @@ public class Movie {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     private Set<Showing> showings;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Pricing pricing;
 
     Movie() {
     }
@@ -65,5 +70,12 @@ public class Movie {
 
     public Set<Showing> getShowings() {
         return showings;
+    }
+
+    public void updatePricing(Map<String, BigDecimal> pricing) {
+        if (this.pricing == null) {
+            this.pricing = new Pricing();
+        }
+        this.pricing.update(pricing);
     }
 }

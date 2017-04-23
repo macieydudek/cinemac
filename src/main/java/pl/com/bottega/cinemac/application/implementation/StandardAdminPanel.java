@@ -1,14 +1,14 @@
 package pl.com.bottega.cinemac.application.implementation;
 
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.application.AdminPanel;
 import pl.com.bottega.cinemac.model.*;
-import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
-import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
-import pl.com.bottega.cinemac.model.commands.CreateShowingsCommand;
-import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
+import pl.com.bottega.cinemac.model.commands.*;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 public class StandardAdminPanel implements AdminPanel {
@@ -37,7 +37,7 @@ public class StandardAdminPanel implements AdminPanel {
     @Override
     public void createMovie(CreateMovieCommand cmd) {
         Movie movie = new Movie(cmd);
-            movieRepository.put(movie);
+        movieRepository.put(movie);
     }
 
 
@@ -56,4 +56,14 @@ public class StandardAdminPanel implements AdminPanel {
             if(!showingRepository.isAlreadyAdded(showing))
             showingRepository.put(showing);
     }
+
+    @Override
+    public void defineMoviePrices(DefineMoviePricingCommand cmd) {
+        Movie movie = movieRepository.get(cmd.getMovieId());
+        if(movie == null) {
+            throw new InvalidCommandException("movieId", "Movie does not exist");
+        }
+        movie.updatePricing(cmd.getPrices());
+    }
+
 }

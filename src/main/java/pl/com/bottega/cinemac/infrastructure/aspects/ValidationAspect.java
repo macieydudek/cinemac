@@ -1,12 +1,10 @@
-package pl.com.bottega.cinemac.infrastructure.Aspects;
+package pl.com.bottega.cinemac.infrastructure.aspects;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
 import pl.com.bottega.cinemac.model.commands.Validatable;
-
-import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
 
 @Component
 @Aspect
@@ -22,5 +20,4 @@ public class ValidationAspect {
             throw new InvalidCommandException(errors);
         }
     }
-
 }
