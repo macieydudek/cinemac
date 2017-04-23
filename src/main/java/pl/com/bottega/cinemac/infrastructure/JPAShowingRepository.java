@@ -19,6 +19,11 @@ public class JPAShowingRepository implements ShowingRepository {
     }
 
     @Override
+    public Showing get(Long id) {
+        return entityManager.find(Showing.class, id);
+    }
+
+    @Override
     public boolean isAlreadyAdded(Showing showing) {
         Query query = entityManager.createQuery("SELECT s FROM Showing s WHERE s.cinema = :cinema AND s.movie = :movie AND s.beginsAt = :beginsAt");
         query.setParameter("cinema", showing.getCinema());
@@ -26,6 +31,4 @@ public class JPAShowingRepository implements ShowingRepository {
         query.setParameter("beginsAt", showing.getBeginsAt());
         return !query.getResultList().isEmpty();
     }
-
-
 }

@@ -3,11 +3,10 @@ package pl.com.bottega.cinemac.infrastructure;
 import org.springframework.context.annotation.Bean;
 import pl.com.bottega.cinemac.application.AdminPanel;
 import pl.com.bottega.cinemac.application.CinemaCatalog;
+import pl.com.bottega.cinemac.application.ReservationProcess;
 import pl.com.bottega.cinemac.application.implementation.StandardAdminPanel;
-import pl.com.bottega.cinemac.model.CinemaRepository;
-import pl.com.bottega.cinemac.model.MovieRepository;
-import pl.com.bottega.cinemac.model.ShowingRepository;
-import pl.com.bottega.cinemac.model.ShowingsFactory;
+import pl.com.bottega.cinemac.application.implementation.StandardReservationProcess;
+import pl.com.bottega.cinemac.model.*;
 
 @org.springframework.context.annotation.Configuration
 public class Configuration {
@@ -42,4 +41,10 @@ public class Configuration {
     public ShowingsFactory showingsFactory() {
         return new ShowingsFactory();
     }
+
+    @Bean
+    public ReservationProcess reservationProcess(PriceCalculator priceCalculator) {return new StandardReservationProcess(priceCalculator); }
+
+    @Bean
+    public PriceCalculator priceCalculator() { return new PriceCalculator();}
 }
