@@ -40,4 +40,9 @@ public class Showing {
     public Movie getMovie() {
         return movie;
     }
+
+
+    public Pricing determinePricing() {
+        return movie.getPricing();
+    }
 }

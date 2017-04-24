@@ -46,5 +46,5 @@ public class Configuration {
     public ReservationProcess reservationProcess(PriceCalculator priceCalculator) {return new StandardReservationProcess(priceCalculator); }
 
     @Bean
-    public PriceCalculator priceCalculator() { return new PriceCalculator();}
+    public PriceCalculator priceCalculator(ShowingRepository showingRepository) { return new PriceCalculator(showingRepository);}
 }

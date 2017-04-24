@@ -35,14 +35,14 @@ public class ErrorHandlers {
                 HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
-        return new ResponseEntity<>(
-                "{\"error\": \"Invalid Data Type\"}",
-                headers,
-                HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+//    @ExceptionHandler(HttpMessageNotReadableException.class)
+//    public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
+//        return new ResponseEntity<>(
+//                "{\"error\": \"Invalid Data Type\"}",
+//                headers,
+//                HttpStatus.UNPROCESSABLE_ENTITY);
+//    }
 }
 

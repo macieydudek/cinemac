@@ -73,9 +73,13 @@ public class Movie {
     }
 
     public void updatePricing(Map<String, BigDecimal> pricing) {
-        if (this.pricing == null) {
+        if (pricing == null) {
             this.pricing = new Pricing();
         }
         this.pricing.update(pricing);
+    }
+
+    public Pricing getPricing() {
+        return pricing;
     }
 }
