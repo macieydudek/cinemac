@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-class Pricing {
+public class Pricing {
 
     @Id
     @GeneratedValue
@@ -31,6 +31,7 @@ class Pricing {
         if (pricing == null) {
             pricing = new HashMap<>();
         }
+        this.pricing.clear();
         this.pricing.putAll(pricing);
     }
 
