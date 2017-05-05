@@ -23,7 +23,7 @@ public class DefineMoviePricingCommand implements Validatable {
             errors.add("pricing", "Price for >>regular<< ticket has to be defined");
         }
         if (!prices.containsKey("student")) {
-            errors.add("pricing", "Price for >>regular<< ticket has to be defined");
+            errors.add("pricing", "Price for >>student<< ticket has to be defined");
         }
         validatePrices(errors);
     }

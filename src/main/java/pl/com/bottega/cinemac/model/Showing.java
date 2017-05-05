@@ -48,6 +48,11 @@ public class Showing {
         return movie;
     }
 
+
+    public Pricing determinePricing() {
+        return movie.getPricing();
+    }
+
     public Set<Reservation> getReservations() {
         return reservations;
     }

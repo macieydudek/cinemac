@@ -96,15 +96,15 @@ public class CreateMovieCommand implements Validatable {
     }
     private void validateLength(ValidationErrors errors) {
         if(length == null){
-            errors.add("lengt","has to be define");
+            errors.add("length","has to be defined");
             return;
         }
         if(length <= 0)
-            errors.add("lengt","invalid value");
+            errors.add("length","invalid value");
     }
     private void validateMinAge(ValidationErrors errors) {
         if(minAge == null){
-            errors.add("minAge","has to be define");
+            errors.add("minAge","has to be defined");
             return;
         }
         if(minAge <= 0)
