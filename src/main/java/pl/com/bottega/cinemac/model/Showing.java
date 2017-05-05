@@ -2,6 +2,7 @@ package pl.com.bottega.cinemac.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Showing {
@@ -16,6 +17,8 @@ public class Showing {
     private Cinema cinema;
     @ManyToOne
     private Movie movie;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Reservation> reservations;
 
     Showing(){}
 
@@ -23,6 +26,10 @@ public class Showing {
         this.beginsAt = date;
         this.cinema = cinema;
         this.movie = movie;
+    }
+
+    public CinemaHall getCinemaHall() {
+        return new CinemaHall(reservations);
     }
 
     public Long getId() {
@@ -39,5 +46,9 @@ public class Showing {
 
     public Movie getMovie() {
         return movie;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
     }
 }
