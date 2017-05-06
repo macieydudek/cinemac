@@ -3,8 +3,10 @@ package pl.com.bottega.cinemac.infrastructure;
 import org.springframework.context.annotation.Bean;
 import pl.com.bottega.cinemac.application.AdminPanel;
 import pl.com.bottega.cinemac.application.CinemaCatalog;
+import pl.com.bottega.cinemac.application.PaymentCollector;
 import pl.com.bottega.cinemac.application.ReservationProcess;
 import pl.com.bottega.cinemac.application.implementation.StandardAdminPanel;
+import pl.com.bottega.cinemac.application.implementation.StandardPaymentCollector;
 import pl.com.bottega.cinemac.application.implementation.StandardReservationProcess;
 import pl.com.bottega.cinemac.model.*;
 
@@ -45,6 +47,11 @@ public class Configuration {
     @Bean
     public ReservationProcess reservationProcess(PriceCalculator priceCalculator, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
         return new StandardReservationProcess(priceCalculator, showingRepository, reservationRepository);
+    }
+
+    @Bean
+    public PaymentCollector paymentCollector() {
+        return new StandardPaymentCollector();
     }
 
     @Bean

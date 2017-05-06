@@ -4,9 +4,7 @@ import pl.com.bottega.cinemac.model.*;
 
 import java.util.Set;
 
-/**
- * Created by Adam.Wronski on 2017-04-23.
- */
+
 public class CreateReservationCommand implements Validatable {
 
     private ReservationStatus status;
