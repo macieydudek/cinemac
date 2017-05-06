@@ -3,10 +3,19 @@ package pl.com.bottega.cinemac.application.implementation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.application.CinemaHallDto;
 import pl.com.bottega.cinemac.application.ReservationProcess;
-import pl.com.bottega.cinemac.model.*;
 import pl.com.bottega.cinemac.model.commands.CalculatePriceCommand;
 import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
 import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
+import pl.com.bottega.cinemac.model.pricing.CalculationResult;
+import pl.com.bottega.cinemac.model.pricing.PriceCalculator;
+import pl.com.bottega.cinemac.model.pricing.Pricing;
+import pl.com.bottega.cinemac.model.reservation.Reservation;
+import pl.com.bottega.cinemac.model.reservation.ReservationItem;
+import pl.com.bottega.cinemac.model.reservation.ReservationNumber;
+import pl.com.bottega.cinemac.model.reservation.ReservationRepository;
+import pl.com.bottega.cinemac.model.showing.CinemaHall;
+import pl.com.bottega.cinemac.model.showing.Showing;
+import pl.com.bottega.cinemac.model.showing.ShowingRepository;
 
 public class StandardReservationProcess implements ReservationProcess {
 

@@ -1,6 +1,6 @@
 package pl.com.bottega.cinemac.application;
 
-import pl.com.bottega.cinemac.model.Seat;
+import pl.com.bottega.cinemac.model.showing.Seat;
 
 import java.util.List;
 

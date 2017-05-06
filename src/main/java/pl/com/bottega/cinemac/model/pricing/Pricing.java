@@ -1,4 +1,4 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.model.pricing;
 
 import javax.persistence.*;
 
@@ -27,7 +27,7 @@ public class Pricing {
     Pricing() {
     }
 
-    void update(Map<String, BigDecimal> pricing) {
+   public void update(Map<String, BigDecimal> pricing) {
         if (pricing == null) {
             pricing = new HashMap<>();
         }

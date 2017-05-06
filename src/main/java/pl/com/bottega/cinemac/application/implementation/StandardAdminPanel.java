@@ -1,14 +1,14 @@
 package pl.com.bottega.cinemac.application.implementation;
 
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.application.AdminPanel;
 import pl.com.bottega.cinemac.model.*;
 import pl.com.bottega.cinemac.model.commands.*;
+import pl.com.bottega.cinemac.model.showing.Showing;
+import pl.com.bottega.cinemac.model.showing.ShowingRepository;
+import pl.com.bottega.cinemac.model.showing.ShowingsFactory;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 @Transactional
 public class StandardAdminPanel implements AdminPanel {

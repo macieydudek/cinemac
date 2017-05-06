@@ -1,4 +1,6 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.model.pricing;
+
+import pl.com.bottega.cinemac.model.reservation.ReservationItem;
 
 import java.math.BigDecimal;
 

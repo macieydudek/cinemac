@@ -3,7 +3,7 @@ package pl.com.bottega.cinemac.infrastructure;
 import pl.com.bottega.cinemac.application.*;
 import pl.com.bottega.cinemac.model.Cinema;
 import pl.com.bottega.cinemac.model.Movie;
-import pl.com.bottega.cinemac.model.Showing;
+import pl.com.bottega.cinemac.model.showing.Showing;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

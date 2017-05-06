@@ -1,8 +1,8 @@
 package pl.com.bottega.cinemac.model.commands;
 
 
-import pl.com.bottega.cinemac.model.PaymentType;
-import pl.com.bottega.cinemac.model.ReservationNumber;
+import pl.com.bottega.cinemac.model.payment.PaymentType;
+import pl.com.bottega.cinemac.model.reservation.ReservationNumber;
 
 public class CollectPaymentCommand {
     private ReservationNumber reservationNumber;

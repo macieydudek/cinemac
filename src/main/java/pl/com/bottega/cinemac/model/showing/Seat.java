@@ -1,4 +1,4 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.model.showing;
 
 import javax.persistence.Embeddable;
 

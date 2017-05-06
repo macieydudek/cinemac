@@ -1,4 +1,4 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.model.pricing;
 
 import java.math.BigDecimal;
 import java.util.HashSet;

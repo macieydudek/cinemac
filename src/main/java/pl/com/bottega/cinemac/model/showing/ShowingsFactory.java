@@ -1,5 +1,7 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.model.showing;
 
+import pl.com.bottega.cinemac.model.Cinema;
+import pl.com.bottega.cinemac.model.Movie;
 import pl.com.bottega.cinemac.model.commands.CreateShowingsCommand;
 import pl.com.bottega.cinemac.model.commands.ShowingCalendar;
 

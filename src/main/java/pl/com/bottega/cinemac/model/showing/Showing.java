@@ -1,4 +1,9 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.model.showing;
+
+import pl.com.bottega.cinemac.model.Cinema;
+import pl.com.bottega.cinemac.model.Movie;
+import pl.com.bottega.cinemac.model.pricing.Pricing;
+import pl.com.bottega.cinemac.model.reservation.Reservation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

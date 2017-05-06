@@ -6,6 +6,10 @@ import pl.com.bottega.cinemac.application.implementation.StandardAdminPanel;
 import pl.com.bottega.cinemac.application.implementation.StandardPaymentCollector;
 import pl.com.bottega.cinemac.application.implementation.StandardReservationProcess;
 import pl.com.bottega.cinemac.model.*;
+import pl.com.bottega.cinemac.model.pricing.PriceCalculator;
+import pl.com.bottega.cinemac.model.reservation.ReservationRepository;
+import pl.com.bottega.cinemac.model.showing.ShowingRepository;
+import pl.com.bottega.cinemac.model.showing.ShowingsFactory;
 
 @org.springframework.context.annotation.Configuration
 public class Configuration {

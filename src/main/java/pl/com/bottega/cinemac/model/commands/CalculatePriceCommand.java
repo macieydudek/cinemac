@@ -1,6 +1,6 @@
 package pl.com.bottega.cinemac.model.commands;
 
-import pl.com.bottega.cinemac.model.ReservationItem;
+import pl.com.bottega.cinemac.model.reservation.ReservationItem;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,6 +1,7 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.model.showing;
 
 import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
+import pl.com.bottega.cinemac.model.reservation.Reservation;
 
 import java.util.LinkedList;
 import java.util.List;

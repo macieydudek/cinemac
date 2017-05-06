@@ -1,7 +1,8 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.model.reservation;
 
 import pl.com.bottega.cinemac.model.commands.CollectPaymentCommand;
 import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
+import pl.com.bottega.cinemac.model.showing.Seat;
 
 import javax.persistence.*;
 import java.util.Set;

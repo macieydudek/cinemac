@@ -1,6 +1,9 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.model.pricing;
 
 import pl.com.bottega.cinemac.model.commands.CalculatePriceCommand;
+import pl.com.bottega.cinemac.model.reservation.ReservationItem;
+import pl.com.bottega.cinemac.model.showing.Showing;
+import pl.com.bottega.cinemac.model.showing.ShowingRepository;
 
 import java.math.BigDecimal;
 import java.util.HashSet;

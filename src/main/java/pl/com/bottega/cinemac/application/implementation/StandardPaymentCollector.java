@@ -1,9 +1,9 @@
 package pl.com.bottega.cinemac.application.implementation;
 
 import pl.com.bottega.cinemac.application.PaymentCollector;
-import pl.com.bottega.cinemac.model.PaymentType;
-import pl.com.bottega.cinemac.model.Reservation;
-import pl.com.bottega.cinemac.model.ReservationRepository;
+import pl.com.bottega.cinemac.model.payment.PaymentType;
+import pl.com.bottega.cinemac.model.reservation.Reservation;
+import pl.com.bottega.cinemac.model.reservation.ReservationRepository;
 import pl.com.bottega.cinemac.model.commands.CollectPaymentCommand;
 import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
 

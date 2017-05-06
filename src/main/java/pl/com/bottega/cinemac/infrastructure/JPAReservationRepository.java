@@ -1,9 +1,9 @@
 package pl.com.bottega.cinemac.infrastructure;
 
 
-import pl.com.bottega.cinemac.model.Reservation;
-import pl.com.bottega.cinemac.model.ReservationNumber;
-import pl.com.bottega.cinemac.model.ReservationRepository;
+import pl.com.bottega.cinemac.model.reservation.Reservation;
+import pl.com.bottega.cinemac.model.reservation.ReservationNumber;
+import pl.com.bottega.cinemac.model.reservation.ReservationRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

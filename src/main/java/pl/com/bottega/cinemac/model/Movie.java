@@ -1,11 +1,12 @@
 package pl.com.bottega.cinemac.model;
 
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
+import pl.com.bottega.cinemac.model.pricing.Pricing;
+import pl.com.bottega.cinemac.model.showing.Showing;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Map;
-import javax.persistence.*;
 import java.util.Set;
 
 @Entity

@@ -13,7 +13,7 @@ import pl.com.bottega.cinemac.application.MovieShowingsDto;
 import pl.com.bottega.cinemac.model.CinemaRepository;
 import pl.com.bottega.cinemac.model.InvalidUserActionException;
 import pl.com.bottega.cinemac.model.MovieRepository;
-import pl.com.bottega.cinemac.model.ShowingRepository;
+import pl.com.bottega.cinemac.model.showing.ShowingRepository;
 import pl.com.bottega.cinemac.model.commands.CreateCinemaCommand;
 import pl.com.bottega.cinemac.model.commands.CreateMovieCommand;
 import pl.com.bottega.cinemac.model.commands.CreateShowingsCommand;

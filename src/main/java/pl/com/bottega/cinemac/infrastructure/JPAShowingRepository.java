@@ -1,8 +1,8 @@
 package pl.com.bottega.cinemac.infrastructure;
 
 
-import pl.com.bottega.cinemac.model.Showing;
-import pl.com.bottega.cinemac.model.ShowingRepository;
+import pl.com.bottega.cinemac.model.showing.Showing;
+import pl.com.bottega.cinemac.model.showing.ShowingRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

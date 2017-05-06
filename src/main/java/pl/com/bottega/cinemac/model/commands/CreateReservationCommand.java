@@ -1,12 +1,12 @@
 package pl.com.bottega.cinemac.model.commands;
 
-import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
-import pl.com.bottega.cinemac.model.*;
+import pl.com.bottega.cinemac.model.reservation.Customer;
+import pl.com.bottega.cinemac.model.reservation.ReservationItem;
+import pl.com.bottega.cinemac.model.reservation.ReservationStatus;
+import pl.com.bottega.cinemac.model.showing.Seat;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Adam.Wronski on 2017-04-23.

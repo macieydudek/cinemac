@@ -1,4 +1,4 @@
-package pl.com.bottega.cinemac.model;
+package pl.com.bottega.cinemac.infrastructure;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
