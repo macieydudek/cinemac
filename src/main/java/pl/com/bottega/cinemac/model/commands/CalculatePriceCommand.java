@@ -34,8 +34,9 @@ public class CalculatePriceCommand implements Validatable {
     }
 
     private void validateTickets(ValidationErrors errors) {
-        if (tickets.isEmpty()) {
-            errors.add("tickets", "Cannot be empty");
+        if (tickets == null || tickets.isEmpty()) {
+            errors.add("tickets", "Has to be defined.");
+            return;
         }
         ensureUniqueTicketType(errors);
         checkTicketCount(errors);
@@ -46,6 +47,7 @@ public class CalculatePriceCommand implements Validatable {
             Long count = reservationItem.getCount();
             if (count == null) {
                 errors.add("count", String.format("Count for ticket kind >>%s<< has to be defined", reservationItem.getKind()));
+                return;
             }
             if (count <= 0) {
                 errors.add("count", String.format("Count for ticket kind >>%s<< has to be positive", reservationItem.getKind()));
@@ -54,17 +56,17 @@ public class CalculatePriceCommand implements Validatable {
     }
 
     private void ensureUniqueTicketType(ValidationErrors errors) {
-        Set<String> tmp = new HashSet<>();
-        for (ReservationItem reservationItem : tickets) {
-            String ticketKind = reservationItem.getKind();
-            if (isEmpty(ticketKind)) {
-                errors.add("ticket type", "All ticket types have to be defined.");
+            Set<String> tmp = new HashSet<>();
+            for (ReservationItem reservationItem : tickets) {
+                String ticketKind = reservationItem.getKind();
+                if (isEmpty(ticketKind)) {
+                    errors.add("ticket type", "All ticket types have to be defined.");
+                }
+                if (tmp.contains(ticketKind)) {
+                    errors.add("tickets", String.format("Ticket kind >>%s<< cannot be duplicated", ticketKind));
+                }
+                tmp.add(reservationItem.getKind());
             }
-            if (tmp.contains(ticketKind)) {
-                errors.add("tickets", String.format("Ticket kind >>%s<< cannot be duplicated", ticketKind));
-            }
-            tmp.add(reservationItem.getKind());
-        }
     }
 
     private void validateShowId(ValidationErrors errors) {

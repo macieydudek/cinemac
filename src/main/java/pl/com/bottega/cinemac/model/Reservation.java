@@ -1,5 +1,6 @@
 package pl.com.bottega.cinemac.model;
 
+import pl.com.bottega.cinemac.model.commands.CollectPaymentCommand;
 import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
 
 import javax.persistence.*;
@@ -54,5 +55,9 @@ public class Reservation {
 
     public Set<Seat> getSeats() {
         return seats;
+    }
+
+    public void collectPayment(CollectPaymentCommand cmd) {
+
     }
 }

@@ -47,8 +47,8 @@ public class Configuration {
     }
 
     @Bean
-    public PaymentCollector paymentCollector() {
-        return new StandardPaymentCollector();
+    public PaymentCollector paymentCollector(ReservationRepository reservationRepository) {
+        return new StandardPaymentCollector(reservationRepository);
     }
 
     @Bean
