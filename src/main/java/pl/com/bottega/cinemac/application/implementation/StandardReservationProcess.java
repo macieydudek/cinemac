@@ -47,6 +47,10 @@ public class StandardReservationProcess implements ReservationProcess {
     @Transactional
     public ReservationNumber create(CreateReservationCommand cmd) {
         Reservation reservation = new Reservation(cmd);
+        CinemaHall cinemaHall = showingRepository.get(cmd.getShowId()).getCinemaHall();
+        if (!cinemaHall.isPossible(cmd))
+            throw new InvalidCommandException("seats",
+                    "You have to choose seats which are not taken and make sure you don't leave single seat surrounded by taken seats, unless there is no other option");
         reservationRepository.put(reservation);
         return reservation.getReservationNumber();
 

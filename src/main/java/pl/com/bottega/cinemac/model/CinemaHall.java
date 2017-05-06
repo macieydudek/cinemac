@@ -21,7 +21,7 @@ public class CinemaHall {
     private void createSeatsFromReservations(Set<Reservation> reservations) {
         for (Reservation reservation : reservations) {
             for (Seat seat : reservation.getSeats())
-                seats[seat.getRow()][seat.getSeat()] = true;
+                seats[seat.getRow() - 1][seat.getSeat() - 1] = true;
         }
     }
 
@@ -48,13 +48,13 @@ public class CinemaHall {
 
         Set<Seat> reservationSeats = cmd.getSeats();
         for (Seat seat : reservationSeats) {
-            if (this.seats[seat.getRow()][seat.getSeat()])
+            if (seatsCopy[seat.getRow() - 1][seat.getSeat() - 1])
                 return false;
             else
-                seatsCopy[seat.getRow()][seat.getSeat()] = true;
+                seatsCopy[seat.getRow() - 1][seat.getSeat() - 1] = true;
         }
 
-        int reservationRow = reservationSeats.iterator().next().getRow();
+        int reservationRow = reservationSeats.iterator().next().getRow() - 1;
         return rowIsOk(seatsCopy, reservationRow) ||
                 !otherRowsAreFree(reservationSeats, seatsCopy);
 
@@ -96,11 +96,11 @@ public class CinemaHall {
     }
 
     private boolean[][] copySeats() {
-        boolean[][] seatsCopy = new boolean[ROWS][SEATS];
+        boolean[][] seatsCopy = new boolean[ROWS][];
 
-        for (int row = 0; row < ROWS; row++)
-            for (int num = 0; num < SEATS; num++)
-                seatsCopy[row][num] = this.seats[row][num];
+        for (int row = 0; row < ROWS; row++) {
+            seatsCopy[row] = this.seats[row].clone();
+        }
         return seatsCopy;
     }
 }

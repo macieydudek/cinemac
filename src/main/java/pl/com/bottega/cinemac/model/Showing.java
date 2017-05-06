@@ -17,7 +17,7 @@ public class Showing {
     private Cinema cinema;
     @ManyToOne
     private Movie movie;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "showId")
     private Set<Reservation> reservations;
 
     Showing(){}

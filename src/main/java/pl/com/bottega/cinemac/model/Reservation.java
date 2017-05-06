@@ -9,6 +9,7 @@ import java.util.Set;
 @Entity
 public class Reservation {
 
+    private Long showId;
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
     @EmbeddedId
@@ -26,6 +27,7 @@ public class Reservation {
     }
 
     public Reservation(CreateReservationCommand cmd){
+        this.showId = cmd.getShowId();
         this.status = cmd.getStatus();
         this.customer = cmd.getCustomer();
         this.reservationItems = cmd.getTickets();
