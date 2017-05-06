@@ -1,9 +1,23 @@
 package pl.com.bottega.cinemac.model;
 
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class ReservationItem {
 
+    @Column(name = "number")
+    public Long count;
+
     private String kind;
-    private Long count;
+
+    ReservationItem(){}
+
+    public ReservationItem(Long count, String kind) {
+        this.count = count;
+        this.kind = kind;
+    }
 
     public Long getCount() {
         return count;
@@ -11,14 +25,6 @@ public class ReservationItem {
 
     public String getKind() {
         return kind;
-    }
-
-    public void setCount(Long count) {
-        this.count = count;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
     }
 
 }

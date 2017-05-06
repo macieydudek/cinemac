@@ -8,6 +8,8 @@ public class Seat {
     private Integer row;
     private Integer seat;
 
+    Seat(){}
+
     public Seat(Integer row, Integer seat) {
         this.row = row;
         this.seat = seat;

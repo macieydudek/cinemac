@@ -5,7 +5,6 @@ import pl.com.bottega.cinemac.model.ReservationItem;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class CalculatePriceCommand implements Validatable {
 
     private Long showId;

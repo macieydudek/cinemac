@@ -43,8 +43,13 @@ public class Configuration {
     }
 
     @Bean
-    public ReservationProcess reservationProcess(PriceCalculator priceCalculator, ShowingRepository showingRepository) {
-        return new StandardReservationProcess(priceCalculator, showingRepository);
+    public ReservationProcess reservationProcess(PriceCalculator priceCalculator, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
+        return new StandardReservationProcess(priceCalculator, showingRepository, reservationRepository);
+    }
+
+    @Bean
+    public ReservationRepository reservationRepository(){
+        return new JPAReservationRepository();
     }
 
     @Bean

@@ -1,19 +1,23 @@
 package pl.com.bottega.cinemac.application.implementation;
 
+import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.application.CinemaHallDto;
 import pl.com.bottega.cinemac.application.ReservationProcess;
 import pl.com.bottega.cinemac.model.*;
 import pl.com.bottega.cinemac.model.commands.CalculatePriceCommand;
+import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
 import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
 
 public class StandardReservationProcess implements ReservationProcess {
 
     PriceCalculator priceCalculator;
     ShowingRepository showingRepository;
+    ReservationRepository reservationRepository;
 
-    public StandardReservationProcess(PriceCalculator priceCalculator, ShowingRepository showingRepository) {
+    public StandardReservationProcess(PriceCalculator priceCalculator, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
         this.priceCalculator = priceCalculator;
         this.showingRepository = showingRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
@@ -37,6 +41,15 @@ public class StandardReservationProcess implements ReservationProcess {
         }
         checkPricingCohesion(cmd, showing);
         return priceCalculator.calculatePrice(cmd);
+    }
+
+    @Override
+    @Transactional
+    public ReservationNumber create(CreateReservationCommand cmd) {
+        Reservation reservation = new Reservation(cmd);
+        reservationRepository.put(reservation);
+        return reservation.getReservationNumber();
+
     }
 
     private void checkPricingCohesion(CalculatePriceCommand cmd, Showing showing) {
