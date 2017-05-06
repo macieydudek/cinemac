@@ -2,6 +2,7 @@ package pl.com.bottega.cinemac.application;
 
 import pl.com.bottega.cinemac.model.CalculationResult;
 import pl.com.bottega.cinemac.model.ReservationNumber;
+import pl.com.bottega.cinemac.model.ReservationStatus;
 import pl.com.bottega.cinemac.model.commands.CalculatePriceCommand;
 import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
 
