@@ -8,9 +8,6 @@ import pl.com.bottega.cinemac.model.showing.Seat;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Adam.Wronski on 2017-04-23.
- */
 public class CreateReservationCommand implements Validatable {
 
 
@@ -53,19 +50,31 @@ public class CreateReservationCommand implements Validatable {
 
     @Override
     public void validate(ValidationErrors errors) {
-
-
-        validateCustomer(errors);
-        validateTicket(errors);
-        validateSeats(errors);
-    }
-
-    private void validateTicket(ValidationErrors errors) {
-        if(tickets == null || tickets.isEmpty()){
-            errors.add("ticket","Minimum one ticket is requied!");
-        }
+        validateTicketQuantity(errors);
         validateTicketKind(errors);
+        validateSeats(errors);
+        validateCustomer(errors);
     }
+
+    private void validateTicketQuantity(ValidationErrors errors) {
+        ensureTicketsNotEmpty(errors);
+        for (ReservationItem ticket : tickets) {
+            validateSingleTicketQuantity(ticket, errors);
+        }
+    }
+
+    private void validateSingleTicketQuantity(ReservationItem ticket, ValidationErrors errors) {
+        if (ticket.getCount() == null || ticket.getCount() <= 0) {
+            errors.add("count", "Has to be positive");
+        }
+    }
+
+    private void ensureTicketsNotEmpty(ValidationErrors errors) {
+        if (tickets == null || tickets.isEmpty()) {
+            errors.add("tickets", "cannot be empty");
+        }
+    }
+
 
     private void validateTicketKind(ValidationErrors errors) {
         Set<String> tmp = new HashSet<>();
@@ -81,55 +90,71 @@ public class CreateReservationCommand implements Validatable {
         }
     }
 
+    //
     private void validateCustomer(ValidationErrors errors) {
-        if(isEmpty(customer.firstName)){
-            errors.add("firstName","Customer must have a name !");
+        if (isEmpty(customer.firstName)) {
+            errors.add("firstName", "Customer must have a name !");
         }
-        if(isEmpty(customer.lastName)){
-            errors.add("lastName","Customer must have a lastName !");
+        if (isEmpty(customer.lastName)) {
+            errors.add("lastName", "Customer must have a lastName !");
         }
         validateCustomerEmail(errors);
 
-        if(isEmpty(customer.phone.toString())){
+        if (customer.phone == null || isEmpty(customer.phone.toString())) {
             errors.add("phone", "Phone is required");
         }
     }
 
     private void validateCustomerEmail(ValidationErrors errors) {
         String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-        String email1 = customer.getEmail();
-        if(isEmpty(customer.email)){
+        String email = customer.getEmail();
+        if (isEmpty(email)) {
             errors.add("email", "Customer must have a email");
+            return;
         }
-        if(!email1.matches(EMAIL_REGEX)){
+        if (!email.matches(EMAIL_REGEX)) {
             errors.add("email", "Email address is invalid");
         }
     }
 
 
     private void validateSeats(ValidationErrors errors) {
-        //Todo validacja rezerwacji miejsc
-
-        if(seats == null || seats.isEmpty()){
-            errors.add("seats","This field can`t be blank");
+        if (seats == null || seats.isEmpty()) {
+            errors.add("seats", "This field can`t be blank");
         }
-        for(Seat seat : seats){
+        validateSeatCount(errors);
+        for (Seat seat : seats) {
             validateRow(errors, seat);
             validateSeat(errors, seat);
         }
     }
 
+    private void validateSeatCount(ValidationErrors errors) {
+        Long totalCount = countTickets();
+        if (totalCount != seats.size()) {
+            errors.add("seats", "seat count has to correspond to ticket count");
+        }
+    }
+
+    private Long countTickets() {
+        Long total = 0L;
+        for (ReservationItem ticket : tickets) {
+            total += ticket.getCount();
+        }
+        return total;
+    }
+
     private void validateSeat(ValidationErrors errors, Seat seat) {
-        if(seat.getSeat()== null)
-            errors.add("seat","Field cant be blank");
-        if(seat.getSeat() > MAX_SEAT && seat.getSeat()< MIN_SEAT)
-            errors.add("seat","Max seat is 15, Min seat is 1");
+        if (seat.getSeat() == null)
+            errors.add("seat", "Field cant be blank");
+        if (seat.getSeat() > MAX_SEAT && seat.getSeat() < MIN_SEAT)
+            errors.add("seat", "Max seat is 15, Min seat is 1");
     }
 
     private void validateRow(ValidationErrors errors, Seat seat) {
-        if(seat.getRow()== null)
+        if (seat.getRow() == null)
             errors.add("row", "Field cant be blank");
-        if(seat.getRow()> MAX_ROW && seat.getRow() < MIN_ROW)
+        if (seat.getRow() > MAX_ROW && seat.getRow() < MIN_ROW)
             errors.add("row", "Max row is 10, Min row is 1");
     }
 
