@@ -26,6 +26,7 @@ public class StandardPaymentCollector implements PaymentCollector{
     }
 
     @Override
+    @Transactional
     public PaymentAttempt collectPayment(CollectPaymentCommand cmd) {
         Reservation reservation = prepareReservation(cmd);
         PaymentAttempt paymentAttempt = reservation.collectPayment(cmd);

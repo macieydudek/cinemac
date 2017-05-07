@@ -67,15 +67,19 @@ public class Reservation {
 
     public PaymentAttempt collectPayment(CollectPaymentCommand cmd) {
         checkStatus();
-        if (this.paymentHistory == null) {
-            this.paymentHistory = new HashSet<>();
-        }
+        preparePaymentHistory();
         if (cmd.getType().equals(PaymentType.CREDIT_CARD)) {
             payByCC(cmd);
         } else {
             return payByCash(cmd);
         }
         return null;
+    }
+
+    private void preparePaymentHistory() {
+        if (this.paymentHistory == null) {
+            this.paymentHistory = new HashSet<>();
+        }
     }
 
     private void payByCC(CollectPaymentCommand cmd) {
