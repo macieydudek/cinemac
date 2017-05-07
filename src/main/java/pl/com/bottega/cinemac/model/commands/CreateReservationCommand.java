@@ -61,8 +61,8 @@ public class CreateReservationCommand implements Validatable {
     }
 
     private void validateTicket(ValidationErrors errors) {
-        if(tickets.isEmpty()){
-            errors.add("ticket","Minimum one ticket is requied !");
+        if(tickets == null || tickets.isEmpty()){
+            errors.add("ticket","Minimum one ticket is requied!");
         }
         validateTicketKind(errors);
     }

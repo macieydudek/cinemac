@@ -10,15 +10,21 @@ public class PaymentAttempt {
 
     private String message;
     private boolean successful;
-    private LocalDateTime time;
 
     public PaymentAttempt(PaymentType type, Long cashierId) {
         this.successful = true;
-        this.time = LocalDateTime.now();
-        this.message = "SUCCESS";
+        this.message = "Transaction type: " + type + " | "
+                + "Transaction date: " + LocalDateTime.now() + " | "
+                + "Cashier Id: " + cashierId;
     }
+
+    PaymentAttempt(){}
 
     public boolean isSuccessful() {
         return this.successful;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

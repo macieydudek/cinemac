@@ -7,6 +7,7 @@ import pl.com.bottega.cinemac.application.PaymentCollector;
 import pl.com.bottega.cinemac.application.ReservationProcess;
 import pl.com.bottega.cinemac.application.TicketPrinter;
 import pl.com.bottega.cinemac.model.pricing.CalculationResult;
+import pl.com.bottega.cinemac.model.reservation.PaymentAttempt;
 import pl.com.bottega.cinemac.model.reservation.ReservationNumber;
 import pl.com.bottega.cinemac.model.commands.CalculatePriceCommand;
 import pl.com.bottega.cinemac.model.commands.CollectPaymentCommand;
@@ -39,10 +40,10 @@ public class ReservationController {
         return reservationProcess.calculatePrice(cmd);
     }
 
-    @PostMapping("/reservations/{reservationNumber}/payments")
-    public void collectPayment(@PathVariable ReservationNumber reservationNumber, @RequestBody CollectPaymentCommand cmd) {
+    @PutMapping("/reservations/{reservationNumber}/payments")
+    public PaymentAttempt collectPayment(@PathVariable ReservationNumber reservationNumber, @RequestBody CollectPaymentCommand cmd) {
         cmd.setReservationNumber(reservationNumber);
-        paymentCollector.collectPayment(cmd);
+        return paymentCollector.collectPayment(cmd);
     }
 
     @GetMapping("/reservations/{reservationNumber}/tickets")
