@@ -22,4 +22,10 @@ public class Seat {
     public Integer getSeat() {
         return seat;
     }
+
+    @Override
+    public String toString() {
+        return  "row: " + row +
+                " seat: " + seat;
+    }
 }

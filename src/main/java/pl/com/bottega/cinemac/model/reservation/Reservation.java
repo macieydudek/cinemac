@@ -97,4 +97,8 @@ public class Reservation {
     public void setPaymentFacade(PaymentFacade paymentFacade) {
         this.paymentFacade = paymentFacade;
     }
+
+    public Long getShowId() {
+        return showId;
+    }
 }

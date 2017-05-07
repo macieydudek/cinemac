@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 public class ReservationItem {
 
     @Column(name = "number")
-    public Long count;
+    private Long count;
 
     private String kind;
 

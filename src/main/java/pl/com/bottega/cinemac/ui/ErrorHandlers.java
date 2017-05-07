@@ -3,7 +3,6 @@ package pl.com.bottega.cinemac.ui;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.com.bottega.cinemac.model.InvalidUserActionException;
@@ -35,14 +34,5 @@ public class ErrorHandlers {
                 HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-//    @ExceptionHandler(HttpMessageNotReadableException.class)
-//    public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
-//        return new ResponseEntity<>(
-//                "{\"error\": \"Invalid Data Type\"}",
-//                headers,
-//                HttpStatus.UNPROCESSABLE_ENTITY);
-//    }
 }
 

@@ -15,6 +15,10 @@ public class ReservationNumber implements Serializable{
         this.reservationNumber = UUID.randomUUID().toString();
     }
 
+    public ReservationNumber(String reservationNumber) {
+        this.reservationNumber = reservationNumber;
+    }
+
     public String getReservationNumber() {
         return reservationNumber;
     }

@@ -46,18 +46,12 @@ public class ReservationController {
     }
 
     @GetMapping("/reservations/{reservationNumber}/tickets")
-    public void printTickets(HttpServletResponse response, @PathVariable String reservationNumber) {
+    public void printTickets(HttpServletResponse response, @PathVariable String reservationNumber) throws IOException, DocumentException {
         response.setContentType("application/pdf");
-        try {
-            OutputStream os = response.getOutputStream();
-            os.write(ticketPrinter.printTickets(reservationNumber));
-            os.flush();
-            os.close();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }catch (DocumentException e) {
-            e.printStackTrace();
-        }
+        OutputStream os = response.getOutputStream();
+        os.write(ticketPrinter.printTickets(reservationNumber));
+        os.flush();
+        os.close();
     }
 
 }

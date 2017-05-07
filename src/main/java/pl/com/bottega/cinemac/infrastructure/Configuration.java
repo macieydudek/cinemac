@@ -73,7 +73,7 @@ public class Configuration {
     public PriceCalculator priceCalculator(ShowingRepository showingRepository) { return new PriceCalculator(showingRepository);}
 
     @Bean
-    public TicketPrinter ticketPrinter() {
-        return new ITextTicketPrinter();
+    public TicketPrinter ticketPrinter(ReservationRepository reservationRepository, ShowingRepository showingRepository) {
+        return new ITextTicketPrinter(reservationRepository, showingRepository);
     }
 }
