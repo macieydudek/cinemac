@@ -20,7 +20,9 @@ public class JPAShowingRepository implements ShowingRepository {
 
     @Override
     public Showing get(Long id) {
-        return entityManager.find(Showing.class, id);
+        Query query = entityManager.createQuery("SELECT s FROM Showing s LEFT JOIN FETCH s.reservations r LEFT JOIN FETCH r.seats WHERE s.id = :id");
+        query.setParameter("id", id);
+        return (Showing) query.getSingleResult();
     }
 
     @Override
