@@ -31,11 +31,11 @@ public class Reservation {
     @ElementCollection
     private Set<PaymentAttempt> paymentHistory;
 
-    Reservation(){
+    Reservation() {
 
     }
 
-    public Reservation(CreateReservationCommand cmd){
+    public Reservation(CreateReservationCommand cmd) {
         this.showId = cmd.getShowId();
         this.customer = cmd.getCustomer();
         this.reservationItems = cmd.getTickets();
@@ -69,11 +69,10 @@ public class Reservation {
         checkStatus();
         preparePaymentHistory();
         if (cmd.getType().equals(PaymentType.CREDIT_CARD)) {
-            payByCC(cmd);
-        } else {
+            return payByCC(cmd);
+        } else
             return payByCash(cmd);
-        }
-        return null;
+
     }
 
     private void preparePaymentHistory() {
@@ -82,7 +81,8 @@ public class Reservation {
         }
     }
 
-    private void payByCC(CollectPaymentCommand cmd) {
+    private PaymentAttempt payByCC(CollectPaymentCommand cmd) {
+        return null;
     }
 
     private PaymentAttempt payByCash(CollectPaymentCommand cmd) {

@@ -18,6 +18,8 @@ public class PaymentAttempt {
                 + "Cashier Id: " + cashierId;
     }
 
+
+
     PaymentAttempt(){}
 
     public boolean isSuccessful() {

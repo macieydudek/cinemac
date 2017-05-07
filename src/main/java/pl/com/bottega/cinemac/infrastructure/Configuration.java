@@ -2,9 +2,11 @@ package pl.com.bottega.cinemac.infrastructure;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.javamail.JavaMailSender;
 import pl.com.bottega.cinemac.application.*;
 import pl.com.bottega.cinemac.application.implementation.StandardAdminPanel;
 import pl.com.bottega.cinemac.application.implementation.StandardPaymentCollector;
+import pl.com.bottega.cinemac.application.implementation.StandardPaymentListener;
 import pl.com.bottega.cinemac.application.implementation.StandardReservationProcess;
 import pl.com.bottega.cinemac.model.*;
 import pl.com.bottega.cinemac.model.payment.PaymentFacade;
@@ -75,5 +77,15 @@ public class Configuration {
     @Bean
     public TicketPrinter ticketPrinter(ReservationRepository reservationRepository, ShowingRepository showingRepository) {
         return new ITextTicketPrinter(reservationRepository, showingRepository);
+    }
+
+    @Bean
+    public PaymentListener paymentListener(TicketMailer ticketMailer, ReservationRepository reservationRepository) {
+        return new StandardPaymentListener(ticketMailer, reservationRepository);
+    }
+
+    @Bean
+    public TicketMailer ticketMailer(TicketPrinter ticketPrinter, JavaMailSender javaMailSender) {
+        return new SMTPGmailTicketMailer(ticketPrinter, javaMailSender);
     }
 }
