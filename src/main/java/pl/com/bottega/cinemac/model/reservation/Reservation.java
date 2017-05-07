@@ -8,6 +8,7 @@ import pl.com.bottega.cinemac.model.payment.PaymentType;
 import pl.com.bottega.cinemac.model.showing.Seat;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -66,10 +67,13 @@ public class Reservation {
 
     public PaymentAttempt collectPayment(CollectPaymentCommand cmd) {
         checkStatus();
+        if (this.paymentHistory == null) {
+            this.paymentHistory = new HashSet<>();
+        }
         if (cmd.getType().equals(PaymentType.CREDIT_CARD)) {
             payByCC(cmd);
         } else {
-            payByCash(cmd);
+            return payByCash(cmd);
         }
         return null;
     }
@@ -77,7 +81,11 @@ public class Reservation {
     private void payByCC(CollectPaymentCommand cmd) {
     }
 
-    private void payByCash(CollectPaymentCommand cmd) {
+    private PaymentAttempt payByCash(CollectPaymentCommand cmd) {
+        this.status = ReservationStatus.PAID;
+        PaymentAttempt paymentAttempt = new PaymentAttempt(cmd.getType(), cmd.getCashierId());
+        paymentHistory.add(paymentAttempt);
+        return paymentAttempt;
     }
 
     private void checkStatus() {

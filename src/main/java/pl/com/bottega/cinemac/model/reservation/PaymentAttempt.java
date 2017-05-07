@@ -1,12 +1,24 @@
 package pl.com.bottega.cinemac.model.reservation;
 
-import java.util.Set;
+import pl.com.bottega.cinemac.model.payment.PaymentType;
 
+import javax.persistence.Embeddable;
+import java.time.LocalDateTime;
+
+@Embeddable
 public class PaymentAttempt {
 
-    private Set<String> paymentErrors;
+    private String message;
+    private boolean successful;
+    private LocalDateTime time;
+
+    public PaymentAttempt(PaymentType type, Long cashierId) {
+        this.successful = true;
+        this.time = LocalDateTime.now();
+        this.message = "SUCCESS";
+    }
 
     public boolean isSuccessful() {
-        return paymentErrors.isEmpty();
+        return this.successful;
     }
 }

@@ -1,6 +1,7 @@
 package pl.com.bottega.cinemac.application.implementation;
 
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.application.PaymentCollector;
 import pl.com.bottega.cinemac.model.commands.CollectPaymentCommand;
 import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
