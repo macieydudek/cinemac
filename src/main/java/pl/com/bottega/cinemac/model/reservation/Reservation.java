@@ -1,7 +1,10 @@
 package pl.com.bottega.cinemac.model.reservation;
 
+import pl.com.bottega.cinemac.model.InvalidUserActionException;
 import pl.com.bottega.cinemac.model.commands.CollectPaymentCommand;
 import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
+import pl.com.bottega.cinemac.model.payment.PaymentFacade;
+import pl.com.bottega.cinemac.model.payment.PaymentType;
 import pl.com.bottega.cinemac.model.showing.Seat;
 
 import javax.persistence.*;
@@ -22,7 +25,10 @@ public class Reservation {
     private Set<ReservationItem> reservationItems;
     @ElementCollection
     private Set<Seat> seats;
-
+    @Transient
+    private PaymentFacade paymentFacade;
+    @ElementCollection
+    private Set<PaymentAttempt> paymentHistory;
 
     Reservation(){
 
@@ -30,11 +36,11 @@ public class Reservation {
 
     public Reservation(CreateReservationCommand cmd){
         this.showId = cmd.getShowId();
-        this.status = cmd.getStatus();
         this.customer = cmd.getCustomer();
         this.reservationItems = cmd.getTickets();
         this.seats = cmd.getSeats();
         this.reservationNumber = new ReservationNumber();
+        this.status = ReservationStatus.PENDING;
     }
 
 
@@ -58,7 +64,29 @@ public class Reservation {
         return seats;
     }
 
-    public void collectPayment(CollectPaymentCommand cmd) {
+    public PaymentAttempt collectPayment(CollectPaymentCommand cmd) {
+        checkStatus();
+        if (cmd.getType().equals(PaymentType.CREDIT_CARD)) {
+            payByCC(cmd);
+        } else {
+            payByCash(cmd);
+        }
+        return null;
+    }
 
+    private void payByCC(CollectPaymentCommand cmd) {
+    }
+
+    private void payByCash(CollectPaymentCommand cmd) {
+    }
+
+    private void checkStatus() {
+        if (!(this.status.equals(ReservationStatus.PENDING) || this.status.equals(ReservationStatus.PAYMENT_FAILED))) {
+            throw new InvalidUserActionException("Reservation has to be PENDING OR PAYMENT_FAILED");
+        }
+    }
+
+    public void setPaymentFacade(PaymentFacade paymentFacade) {
+        this.paymentFacade = paymentFacade;
     }
 }

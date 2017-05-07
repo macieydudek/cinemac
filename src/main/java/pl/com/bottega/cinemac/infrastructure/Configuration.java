@@ -1,11 +1,14 @@
 package pl.com.bottega.cinemac.infrastructure;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import pl.com.bottega.cinemac.application.*;
 import pl.com.bottega.cinemac.application.implementation.StandardAdminPanel;
 import pl.com.bottega.cinemac.application.implementation.StandardPaymentCollector;
 import pl.com.bottega.cinemac.application.implementation.StandardReservationProcess;
 import pl.com.bottega.cinemac.model.*;
+import pl.com.bottega.cinemac.model.payment.PaymentFacade;
+import pl.com.bottega.cinemac.model.payment.StripePaymentFacade;
 import pl.com.bottega.cinemac.model.pricing.PriceCalculator;
 import pl.com.bottega.cinemac.model.reservation.ReservationRepository;
 import pl.com.bottega.cinemac.model.showing.ShowingRepository;
@@ -51,8 +54,14 @@ public class Configuration {
     }
 
     @Bean
-    public PaymentCollector paymentCollector(ReservationRepository reservationRepository) {
-        return new StandardPaymentCollector(reservationRepository);
+    public PaymentCollector paymentCollector(ReservationRepository reservationRepository, PaymentFacade paymentFacade,
+                                             ApplicationEventPublisher applicationEventPublisher) {
+        return new StandardPaymentCollector(reservationRepository, paymentFacade, applicationEventPublisher);
+    }
+
+    @Bean
+    public PaymentFacade paymentFacade() {
+        return new StripePaymentFacade();
     }
 
     @Bean
