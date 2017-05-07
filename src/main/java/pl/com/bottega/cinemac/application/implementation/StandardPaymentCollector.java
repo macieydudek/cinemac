@@ -38,7 +38,6 @@ public class StandardPaymentCollector implements PaymentCollector{
 
     private Reservation prepareReservation(CollectPaymentCommand cmd) {
         Reservation reservation = fetchReservation(cmd);
-        addPaymentFacade(reservation, cmd);
         return reservation;
     }
 
@@ -48,11 +47,5 @@ public class StandardPaymentCollector implements PaymentCollector{
             throw new InvalidCommandException("reservationNumber", String.format("Reservation >>>%s<<< does not exist", cmd.getReservationNumber()));
         }
         return reservation;
-    }
-
-    private void addPaymentFacade(Reservation reservation, CollectPaymentCommand cmd) {
-        if (cmd.getType().equals(PaymentType.CREDIT_CARD)) {
-            reservation.setPaymentFacade(paymentFacade);
-        }
     }
 }
