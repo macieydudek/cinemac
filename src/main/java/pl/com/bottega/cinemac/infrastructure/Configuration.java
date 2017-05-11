@@ -57,8 +57,9 @@ public class Configuration {
 
     @Bean
     public PaymentCollector paymentCollector(ReservationRepository reservationRepository, PaymentFacade paymentFacade,
-                                             ApplicationEventPublisher applicationEventPublisher) {
-        return new StandardPaymentCollector(reservationRepository, paymentFacade, applicationEventPublisher);
+                                             ApplicationEventPublisher applicationEventPublisher, ShowingRepository showingRepository,
+                                             PriceCalculator priceCalculator) {
+        return new StandardPaymentCollector(reservationRepository, paymentFacade, applicationEventPublisher, showingRepository, priceCalculator);
     }
 
     @Bean

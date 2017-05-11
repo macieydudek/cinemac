@@ -1,19 +1,28 @@
 package pl.com.bottega.cinemac.model.reservation;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.com.bottega.cinemac.model.InvalidUserActionException;
+import pl.com.bottega.cinemac.model.commands.CalculatePriceCommand;
 import pl.com.bottega.cinemac.model.commands.CollectPaymentCommand;
 import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
 import pl.com.bottega.cinemac.model.payment.PaymentFacade;
 import pl.com.bottega.cinemac.model.payment.PaymentType;
+import pl.com.bottega.cinemac.model.pricing.CalculationResult;
+import pl.com.bottega.cinemac.model.pricing.PriceCalculator;
 import pl.com.bottega.cinemac.model.showing.Seat;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
 public class Reservation {
+
+    @Autowired
+    @Transient
+    PriceCalculator priceCalculator;
 
     private Long showId;
     @Enumerated(EnumType.STRING)
@@ -29,7 +38,7 @@ public class Reservation {
     @Transient
     private PaymentFacade paymentFacade;
     @ElementCollection
-    private Set<PaymentAttempt> paymentHistory;
+    private Set<PaymentAttempt> paymentAttempts;
 
     Reservation() {
 
@@ -76,20 +85,31 @@ public class Reservation {
     }
 
     private void preparePaymentHistory() {
-        if (this.paymentHistory == null) {
-            this.paymentHistory = new HashSet<>();
+        if (this.paymentAttempts == null) {
+            this.paymentAttempts = new HashSet<>();
         }
     }
 
     private PaymentAttempt payByCC(CollectPaymentCommand cmd) {
-        return null;
+        PaymentAttempt paymentAttempt = PaymentAttempt.createCCPaymentAttempt(paymentFacade.charge(cmd.getCreditCard(), cmd.getAmount()));
+        updateStatus(paymentAttempt);
+        paymentAttempts.add(paymentAttempt);
+        return paymentAttempt;
     }
 
     private PaymentAttempt payByCash(CollectPaymentCommand cmd) {
-        this.status = ReservationStatus.PAID;
-        PaymentAttempt paymentAttempt = new PaymentAttempt(cmd.getType(), cmd.getCashierId());
-        paymentHistory.add(paymentAttempt);
+        PaymentAttempt paymentAttempt = PaymentAttempt.createCashPaymentAttempt(cmd.getCashierId());
+        updateStatus(paymentAttempt);
+        paymentAttempts.add(paymentAttempt);
         return paymentAttempt;
+    }
+
+    private void updateStatus(PaymentAttempt paymentAttempt) {
+        if (paymentAttempt.isSuccessful()) {
+            this.status = ReservationStatus.PAID;
+        } else {
+            this.status = ReservationStatus.PAYMENT_FAILED;
+        }
     }
 
     private void checkStatus() {
