@@ -17,18 +17,21 @@ public class Showing {
     Long id;
     LocalDateTime beginsAt;
 
+    LocalDateTime endsAt;
+
     @ManyToOne
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
     @ManyToOne
     private Movie movie;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "showId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "showing")
     private Set<Reservation> reservations;
 
     Showing(){}
 
     public Showing(LocalDateTime date, Cinema cinema, Movie movie) {
         this.beginsAt = date;
+        this.endsAt = beginsAt.plusMinutes(movie.getLength());
         this.cinema = cinema;
         this.movie = movie;
     }
@@ -60,5 +63,9 @@ public class Showing {
 
     public Set<Reservation> getReservations() {
         return reservations;
+    }
+
+    public LocalDateTime getEndsAt() {
+        return endsAt;
     }
 }

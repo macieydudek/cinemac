@@ -29,7 +29,7 @@ public class ITextTicketPrinter implements TicketPrinter {
         Reservation reservation = reservationRepository.get(new ReservationNumber(reservationNumber));
         ensureCorrectNumber(reservation);
         ensureIsPaid(reservation);
-        Showing showing = showingRepository.get(reservation.getShowId());
+        Showing showing = reservation.getShowing();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter.getInstance(document, baos);
         writeTicketsToDocument(document, reservation, showing);

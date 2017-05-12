@@ -2,17 +2,15 @@ package pl.com.bottega.cinemac.model.reservation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.com.bottega.cinemac.model.InvalidUserActionException;
-import pl.com.bottega.cinemac.model.commands.CalculatePriceCommand;
 import pl.com.bottega.cinemac.model.commands.CollectPaymentCommand;
 import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
 import pl.com.bottega.cinemac.model.payment.PaymentFacade;
 import pl.com.bottega.cinemac.model.payment.PaymentType;
-import pl.com.bottega.cinemac.model.pricing.CalculationResult;
 import pl.com.bottega.cinemac.model.pricing.PriceCalculator;
 import pl.com.bottega.cinemac.model.showing.Seat;
+import pl.com.bottega.cinemac.model.showing.Showing;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +22,8 @@ public class Reservation {
     @Transient
     PriceCalculator priceCalculator;
 
-    private Long showId;
+    @ManyToOne
+    private Showing showing;
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
     @EmbeddedId
@@ -44,8 +43,8 @@ public class Reservation {
 
     }
 
-    public Reservation(CreateReservationCommand cmd) {
-        this.showId = cmd.getShowId();
+    public Reservation(CreateReservationCommand cmd, Showing showing) {
+        this.showing = showing;
         this.customer = cmd.getCustomer();
         this.reservationItems = cmd.getTickets();
         this.seats = cmd.getSeats();
@@ -122,7 +121,7 @@ public class Reservation {
         this.paymentFacade = paymentFacade;
     }
 
-    public Long getShowId() {
-        return showId;
+    public Showing getShowing() {
+        return showing;
     }
 }

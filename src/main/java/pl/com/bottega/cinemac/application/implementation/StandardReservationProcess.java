@@ -17,11 +17,21 @@ import pl.com.bottega.cinemac.model.showing.CinemaHall;
 import pl.com.bottega.cinemac.model.showing.Showing;
 import pl.com.bottega.cinemac.model.showing.ShowingRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 public class StandardReservationProcess implements ReservationProcess {
+
 
     PriceCalculator priceCalculator;
     ShowingRepository showingRepository;
     ReservationRepository reservationRepository;
+    EntityManager entityManager;
+
+
 
     public StandardReservationProcess(PriceCalculator priceCalculator, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
         this.priceCalculator = priceCalculator;
@@ -55,8 +65,9 @@ public class StandardReservationProcess implements ReservationProcess {
     @Override
     @Transactional
     public ReservationNumber create(CreateReservationCommand cmd) {
-        Reservation reservation = new Reservation(cmd);
-        CinemaHall cinemaHall = showingRepository.get(cmd.getShowId()).getCinemaHall();
+        Showing showing = showingRepository.get(cmd.getShowId());
+        Reservation reservation = new Reservation(cmd, showing);
+        CinemaHall cinemaHall = showing.getCinemaHall();
         if (!cinemaHall.isPossible(cmd))
             throw new InvalidCommandException("seats",
                     "You have to choose seats which are not taken and make sure you don't leave single seat surrounded by taken seats, unless there is no other option");
@@ -74,4 +85,6 @@ public class StandardReservationProcess implements ReservationProcess {
             }
         }
     }
+
+
 }

@@ -66,7 +66,7 @@ public class StandardPaymentCollector implements PaymentCollector {
 
     private BigDecimal getAmount(Reservation reservation) {
         CalculatePriceCommand calculateCmd = new CalculatePriceCommand();
-        calculateCmd.setShowId(reservation.getShowId());
+        calculateCmd.setShowId(reservation.getShowing().getId());
         calculateCmd.setTickets(reservation.getReservationItems());
         return priceCalculator.calculatePrice(calculateCmd).getTotalPrice();
     }
