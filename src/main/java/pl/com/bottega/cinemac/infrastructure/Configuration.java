@@ -3,6 +3,7 @@ package pl.com.bottega.cinemac.infrastructure;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import pl.com.bottega.cinemac.application.*;
 import pl.com.bottega.cinemac.application.implementation.*;
 import pl.com.bottega.cinemac.model.*;
@@ -90,6 +91,11 @@ public class Configuration {
     @Bean
     public ReservationCatalog reservationCatalog(PriceCalculator priceCalculator){
         return new JPAReservationCatalog(priceCalculator);
+    }
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        return new JavaMailSenderImpl();
     }
 }
 
