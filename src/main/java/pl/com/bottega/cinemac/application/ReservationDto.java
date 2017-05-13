@@ -1,7 +1,7 @@
 package pl.com.bottega.cinemac.application;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import pl.com.bottega.cinemac.model.reservation.Customer;
-import pl.com.bottega.cinemac.model.reservation.ReservationItem;
 import pl.com.bottega.cinemac.model.showing.Seat;
 
 import java.math.BigDecimal;
@@ -12,8 +12,8 @@ public class ReservationDto {
 
     String number;
     ShowingDto show;
-    MovieDto movieDto;
-    Set<ReservationItem> tickets;
+    MovieDto movie;
+    Set<TicketDto> tickets;
     Set<Seat> seats;
     Customer customer;
     String status;
@@ -35,19 +35,19 @@ public class ReservationDto {
         this.show = new ShowingDto(id, time);
     }
 
-    public MovieDto getMovieDto() {
-        return movieDto;
+    public MovieDto getMovie() {
+        return movie;
     }
 
     public void setMovieDto(Long id, String title) {
-        this.movieDto = new MovieDto(id, title);
+        this.movie = new MovieDto(id, title);
     }
 
-    public Set<ReservationItem> getTickets() {
+    public Set<TicketDto> getTickets() {
         return tickets;
     }
 
-    public void setTickets(Set<ReservationItem> tickets) {
+    public void setTickets(Set<TicketDto> tickets) {
         this.tickets = tickets;
     }
 
@@ -111,6 +111,7 @@ public class ReservationDto {
 
     private class ShowingDto {
         Long id;
+        @JsonFormat(pattern = "yyyy/MM/dd kk:mm")
         LocalDateTime time;
 
         public ShowingDto(Long id, LocalDateTime time) {
