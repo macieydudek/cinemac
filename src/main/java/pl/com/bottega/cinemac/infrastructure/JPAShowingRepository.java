@@ -7,6 +7,7 @@ import pl.com.bottega.cinemac.model.showing.ShowingRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 public class JPAShowingRepository implements ShowingRepository {
 
@@ -22,7 +23,11 @@ public class JPAShowingRepository implements ShowingRepository {
     public Showing get(Long id) {
         Query query = entityManager.createQuery("SELECT s FROM Showing s LEFT JOIN FETCH s.reservations r LEFT JOIN FETCH r.seats WHERE s.id = :id");
         query.setParameter("id", id);
-        return (Showing) query.getSingleResult();
+        List<Showing> showings = query.getResultList();
+        if (!showings.isEmpty())
+            return showings.get(0);
+        else
+            return null;
     }
 
     @Override

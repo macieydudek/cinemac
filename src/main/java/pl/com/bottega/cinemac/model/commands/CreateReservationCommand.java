@@ -92,16 +92,16 @@ public class CreateReservationCommand implements Validatable {
 
     //
     private void validateCustomer(ValidationErrors errors) {
-        if (isEmpty(customer.firstName)) {
-            errors.add("firstName", "Customer must have a name !");
-        }
-        if (isEmpty(customer.lastName)) {
-            errors.add("lastName", "Customer must have a lastName !");
-        }
-        validateCustomerEmail(errors);
-
-        if (customer.phone == null || isEmpty(customer.phone.toString())) {
-            errors.add("phone", "Phone is required");
+        if (customer == null)
+            errors.add("customer", "Customer is required");
+        else {
+            if (isEmpty(customer.getFirstName()))
+                errors.add("firstName", "Customer must have a name !");
+            if (isEmpty(customer.getLastName()))
+                errors.add("lastName", "Customer must have a lastName !");
+            validateCustomerEmail(errors);
+            if (customer.getPhone() == null || isEmpty(String.valueOf(customer.getPhone())))
+                errors.add("phone", "Phone is required");
         }
     }
 
@@ -147,14 +147,14 @@ public class CreateReservationCommand implements Validatable {
     private void validateSeat(ValidationErrors errors, Seat seat) {
         if (seat.getSeat() == null)
             errors.add("seat", "Field cant be blank");
-        if (seat.getSeat() > MAX_SEAT && seat.getSeat() < MIN_SEAT)
+        if (seat.getSeat() > MAX_SEAT || seat.getSeat() < MIN_SEAT)
             errors.add("seat", "Max seat is 15, Min seat is 1");
     }
 
     private void validateRow(ValidationErrors errors, Seat seat) {
         if (seat.getRow() == null)
             errors.add("row", "Field cant be blank");
-        if (seat.getRow() > MAX_ROW && seat.getRow() < MIN_ROW)
+        if (seat.getRow() > MAX_ROW || seat.getRow() < MIN_ROW)
             errors.add("row", "Max row is 10, Min row is 1");
     }
 

@@ -6,10 +6,10 @@ import javax.persistence.Embeddable;
 
 public class Customer {
 
-    public String firstName;
-    public String lastName;
-    public Long phone;
-    public String email;
+    private String firstName;
+    private String lastName;
+    private Long phone;
+    private String email;
 
     public String getFirstName() {
         return firstName;

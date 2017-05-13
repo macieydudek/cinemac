@@ -3,6 +3,7 @@ package pl.com.bottega.cinemac.application.implementation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.cinemac.application.CinemaHallDto;
 import pl.com.bottega.cinemac.application.ReservationProcess;
+import pl.com.bottega.cinemac.model.Movie;
 import pl.com.bottega.cinemac.model.commands.CalculatePriceCommand;
 import pl.com.bottega.cinemac.model.commands.CreateReservationCommand;
 import pl.com.bottega.cinemac.model.commands.InvalidCommandException;
@@ -17,21 +18,15 @@ import pl.com.bottega.cinemac.model.showing.CinemaHall;
 import pl.com.bottega.cinemac.model.showing.Showing;
 import pl.com.bottega.cinemac.model.showing.ShowingRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Set;
 
 public class StandardReservationProcess implements ReservationProcess {
-
 
     PriceCalculator priceCalculator;
     ShowingRepository showingRepository;
     ReservationRepository reservationRepository;
-    EntityManager entityManager;
-
-
 
     public StandardReservationProcess(PriceCalculator priceCalculator, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
         this.priceCalculator = priceCalculator;
@@ -66,6 +61,8 @@ public class StandardReservationProcess implements ReservationProcess {
     @Transactional
     public ReservationNumber create(CreateReservationCommand cmd) {
         Showing showing = showingRepository.get(cmd.getShowId());
+        ensureNotNull(showing);
+        validateTicketKinds(showing.getMovie(), cmd.getTickets());
         Reservation reservation = new Reservation(cmd, showing);
         CinemaHall cinemaHall = showing.getCinemaHall();
         if (!cinemaHall.isPossible(cmd))
@@ -74,6 +71,19 @@ public class StandardReservationProcess implements ReservationProcess {
         reservationRepository.put(reservation);
         return reservation.getReservationNumber();
 
+    }
+
+    private void validateTicketKinds(Movie movie, Set<ReservationItem> tickets) {
+        Map<String, BigDecimal> pricing = movie.getPricing().getPricing();
+        for(ReservationItem ticket : tickets) {
+            if(!pricing.containsKey(ticket.getKind()))
+                throw new InvalidCommandException("kind", "Invalid ticket kind");
+        }
+    }
+
+    private void ensureNotNull(Showing showing) {
+        if(showing == null)
+            throw new InvalidCommandException("showId", "Invalid showId");
     }
 
     private void checkPricingCohesion(CalculatePriceCommand cmd, Showing showing) {
