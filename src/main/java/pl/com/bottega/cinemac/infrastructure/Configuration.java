@@ -93,9 +93,5 @@ public class Configuration {
         return new JPAReservationCatalog(priceCalculator);
     }
 
-    @Bean
-    public JavaMailSender javaMailSender() {
-        return new JavaMailSenderImpl();
-    }
 }
 
